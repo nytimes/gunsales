@@ -25,3 +25,6 @@ The source data comes from the [FBI's National Instant Criminal Background Check
 
 BuzzFeed also released the same dataset on [Github](https://github.com/BuzzFeedNews/nics-firearm-background-checks/) last week.
 
+#### Getting gun sales estimates from background checks
+
+We used a method suggested by [research published](http://www.smallarmssurvey.org/fileadmin/docs/F-Working-papers/SAS-WP14-US-Firearms-Industry.pdf) in the Small Arms Survey, which uses an estimate of the number of sales for each background check. Each long gun and hand gun check was counted for 1.1 sales. Each multiple gun check was counted for 2 sales. Permit checks and other types of checks were omitted. The multiplier is only an estimate, but which was described by other experts as reasonable.
