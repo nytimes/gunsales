@@ -9,10 +9,12 @@ This script uses the R package [seasonal](https://cran.r-project.org/web/package
 
 ### Running the script
 
-You can either run the script line by line in RStudio or as a whole on the command-line:
+You can either open `main.R`  in RStudio and run it line by line or run the entire script as a whole on the command-line:
 
 ```sh
 $ R --no-save < main.R
 ```
+
+The script creates the PDF plots and CSV files in the `out/` folder.
 
 For more explanation of what the script is doing, please read through the comments in [main.R](https://github.com/NYTimes/gun-sales/blob/master/main.R).
