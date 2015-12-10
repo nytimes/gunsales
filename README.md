@@ -21,7 +21,7 @@ For more explanation of what the script is doing, please read through the commen
 
 ### Data issues
 
-As source data we used background check data from the [FBI's National Instant Criminal Background Check System](https://www.fbi.gov/about-us/cjis/nics), which was converted from the original [PDF format](https://www.fbi.gov/about-us/cjis/nics/reports/nics_firearm_checks_-_month_year_by_state_type.pdf) using [Tabula](http://tabula.technology/).
+The source data comes from the [FBI's National Instant Criminal Background Check System](https://www.fbi.gov/about-us/cjis/nics), and was converted from the original [PDF format](https://www.fbi.gov/about-us/cjis/nics/reports/nics_firearm_checks_-_month_year_by_state_type.pdf) to CSV using [Tabula](http://tabula.technology/).
 
 BuzzFeed also released the same dataset on [Github](https://github.com/BuzzFeedNews/nics-firearm-background-checks/) last week.
 
