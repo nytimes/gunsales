@@ -15,6 +15,13 @@ You can either open `main.R`  in RStudio and run it line by line or run the enti
 $ R --no-save < main.R
 ```
 
-The script creates the PDF plots and CSV files in the `out/` folder.
+The script creates the [PDF plots](https://github.com/NYTimes/gun-sales/blob/master/out/plots.pdf) and [CSV](https://github.com/NYTimes/gun-sales/blob/master/out/final.csv) [files](https://github.com/NYTimes/gun-sales/blob/master/out/gun-sales-by-year.csv) in the `out/` folder.
 
 For more explanation of what the script is doing, please read through the comments in [main.R](https://github.com/NYTimes/gun-sales/blob/master/main.R).
+
+### Data issues
+
+As source data we used background check data from the [FBI's National Instant Criminal Background Check System](https://www.fbi.gov/about-us/cjis/nics), which was converted from the original [PDF format](https://www.fbi.gov/about-us/cjis/nics/reports/nics_firearm_checks_-_month_year_by_state_type.pdf) using [Tabula](http://tabula.technology/).
+
+BuzzFeed also released the same dataset on [Github](https://github.com/BuzzFeedNews/nics-firearm-background-checks/) last week.
+
