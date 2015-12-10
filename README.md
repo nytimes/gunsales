@@ -9,7 +9,7 @@ This script uses the R package [seasonal](https://cran.r-project.org/web/package
 
 ### Running the script
 
-You can run the script in RStudio or on the command-line:
+You can either run the script line by line in RStudio or as a whole on the command-line:
 
 ```sh
 $ R --no-save < main.R
