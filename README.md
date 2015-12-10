@@ -27,6 +27,6 @@ BuzzFeed also released the same dataset on [Github](https://github.com/BuzzFeedN
 
 #### Getting gun sales estimates from background checks
 
-We used a method suggested by Jurgen Brauer, a professor at Georgia Regents University, [in the Small Arms Survey](http://www.smallarmssurvey.org/fileadmin/docs/F-Working-papers/SAS-WP14-US-Firearms-Industry.pdf) to estimate the number of sales for each background check. Each long gun and handgun check was counted as 1.1 sales. Each multiple gun check was counted as two sales. Permit checks and other types of checks were omitted. The multiplier is an estimate based on Mr. Brauer's interviews with gun shop owners.
+To convert background checks into estimated sales, we relied on a method suggested in the [Small Arms Survey](http://www.smallarmssurvey.org/fileadmin/docs/F-Working-papers/SAS-WP14-US-Firearms-Industry.pdf) by Jurgen Brauer, a professor at Georgia Regents University. Each long gun and handgun check was counted as 1.1 sales. Each multiple-gun check was counted as two sales. Permit checks and other types of checks were omitted. The multiplier is an estimate based on Mr. Brauer's interviews with gun shop owners.
 
 Note: In our [computation](https://github.com/NYTimes/gun-sales/blob/master/main.R#L20), we excluded background checks for the "multiple" category in California because they followed an unusual pattern that did not match California gun sales data.
