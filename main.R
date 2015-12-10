@@ -17,6 +17,9 @@ all <- read_csv('data/ncis_bystate_bymonth_bytype.csv', na = '#N/A')
 
 # estimate gun sales using formula by Jurgen Brauer, published here
 # http://www.smallarmssurvey.org/fileadmin/docs/F-Working-papers/SAS-WP14-US-Firearms-Industry.pdf
+#
+# note: the column `multiple_corrected` is a copy of `multiple` in which
+# we set the checks in the "multiple" category to 0 for California
 all <- all %>% mutate(guns_sold=(handgun + longgun) * 1.1 + multiple_corrected * 2)
 
 # let's look at the total numbers
