@@ -51,15 +51,16 @@ plot(total.seas / 280726, main='Estimated gun sales per 1000', xlab='red = adjus
 # and add the not normalized version for comparison
 lines(total.seas.pop, col='red')
 
-# create a big data frame that contains all the
+# create a new data frame that eventually stores all the
 # data we need in the final piece
 out_data <- ts_to_dataframe(total, 'guns_total') %>% 
     mutate(guns_total=round(guns_total, 3))
 
-out_data
-ts_to_dataframe( total.seas.pop ) %>%
-    mutate(guns_total_per_1000=round(value,3)) %>%
-    select(year, month, guns_total_per_1000)
+out_data <- out_data %>% left_join(
+    ts_to_dataframe( total.seas.pop ) %>%
+        mutate(guns_total_per_1000=round(value,3)) %>%
+        select(year, month, guns_total_per_1000)
+    )
 
 # create a temporary data frame for computing the
 # handgun_share and longgun_share columns
