@@ -1,16 +1,69 @@
 
-# load Josh Katz' needs() function
-source('needs.R')
+## load Josh Katz' needs() function
+##source('needs.R')
+## or not, as we don't believe in reinventing the packaging system for R
 
-# load our helper functions
-source('functions.R')
+## load our helper functions
+##source('functions.R')
+## or not, as these are just four function
+## --------------------------------------------------------------------------------
+state_ts <- function(data, state_ts, column='guns_sold', outer_zeros_to_na=TRUE) {
+   d <- data %>%
+        filter(state == state_ts & (year >= 2000)) %>%
+        arrange(year, month.num) %>%
+        select_('year', month='month.num', value=column)
+   # d$value[d$value == 0] <- NA
+   series <- ts(d$value, start=c(d$year[1],d$month[1]), end=c(last(d$year), last(d$month)), frequency = 12)
+   if (outer_zeros_to_na) series <- replace_outer_zeros(series)
+   series
+}
 
-# this script uses the `seasonal` package, which
-# itself depends on `X13`
-Sys.setenv(X13_PATH = ".")
+ts_to_dataframe <- function(t, value.name='value') {
+    df <- data.frame(year=as.numeric(floor(time(t))),
+               month=as.numeric(round(1+(time(t) - floor(time(t))) * 12)),
+               value=as.matrix(t))
+    colnames(df) <- c('year', 'month', value.name)
+    df
+}
 
-# load packages we need
-needs(readr, dplyr, seasonal, stringr)
+state_data <- function(state_, normalize=T, adj_seasonal=T, column='guns_sold') {
+    state <- state_ts(all, state_, column)
+    if (adj_seasonal) {
+        pct <- seas(state) %>% final()
+        if (normalize) pct <- pct / total.seas * 100
+    } else {
+        if (normalize) pct <- state / total * 100
+        else pct <- state
+    }
+    pct
+}
+
+
+replace_outer_zeros <- function(x) {
+    for(i in 1:length(x)){        
+        if(x[i] != 0) break
+        if(x[i] == 0) x[i] <- NA
+    }
+    for(i in length(x):1){        
+        if(x[i] != 0) break
+        if(x[i] == 0) x[i] <- NA
+    }
+    x
+}
+## --------------------------------------------------------------------------------
+
+
+## this script uses the `seasonal` package, which
+## itself depends on `X13`
+##Sys.setenv(X13_PATH = ".")
+## the dev version of seasonal uses the dev version of x13binary to install and auto-detect this
+
+## load packages we need
+## needs(readr, dplyr, seasonal, stringr)
+library(readr)
+library(dplyr)
+library(seasonal)
+library(stringr)
 
 # read source data
 all <- read_csv('data/ncis_bystate_bymonth_bytype.csv', na = '#N/A')
@@ -20,10 +73,12 @@ all <- read_csv('data/ncis_bystate_bymonth_bytype.csv', na = '#N/A')
 #
 # note: the column `multiple_corrected` is a copy of `multiple` in which
 # we set the checks in the "multiple" category to 0 for California
-all <- all %>% mutate(guns_sold=(handgun + longgun) * 1.1 + multiple_corrected * 2)
+#all <- all %>% mutate(guns_sold=(handgun + longgun) * 1.1 + multiple_corrected * 2)
+all <- mutate(all, guns_sold=(handgun + longgun) * 1.1 + multiple_corrected * 2)
 
 # let's look at the total numbers
-total <- all %>% state_ts('Totals', 'guns_sold')
+#total <- all %>% state_ts('Totals', 'guns_sold')
+total <- state_ts(all, 'Totals', 'guns_sold')
 
 # save all plots as PDF
 pdf('out/plots.pdf', width=9, height=4)
@@ -32,7 +87,8 @@ pdf('out/plots.pdf', width=9, height=4)
 plot(total / 1e6, main='Total estimated gun sales', ylab='in million', xlab='')
 
 # compute seasonally adjusted gun sales
-total.seas <- total %>% seas %>% final
+#total.seas <- total %>% seas %>% final
+total.seas <- final(seas(total))
 
 # plot seasonally adjusted gun sales
 plot(total.seas / 1e6, main='Total estimated gun sales', ylab='in million', xlab='seasonal adjused')
