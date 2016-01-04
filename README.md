@@ -5,23 +5,25 @@ Obama and Calls for Restrictions](http://www.nytimes.com/interactive/2015/12/10/
 
 ### Pre-requisites
 
-This script uses the R package [seasonal](https://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf) for the seasonal adjustments, which itself uses a program called [X-13ARIMA-SEATS](). 
+This package depends on the R package [seasonal](https://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf) for the seasonal adjustments, which itself uses a program called [X-13ARIMA-SEATS](). 
 Windows, OS X and Linux binaries for this program are installed by the R package [x13binary](https://github.com/x13org/x13binary).
 
-### Running the script
+You can currently install both via the [ghrr drat repo](http://ghrr.github.io/drat/)
 
-Run the script from the command-line:
+### Running the main function
 
-```sh
-$ Rscript main.R
+Once the package has loaded, run
+
+```r
+analysis()
 ```
 
 or step-by-step in your favorite R environment as eg
 [RStudio](http://www.rstudio.com) or [ESS](http://ess.r-project.org).
 
-The script creates the [PDF plots](https://github.com/NYTimes/gun-sales/blob/master/out/plots.pdf) and [CSV](https://github.com/NYTimes/gun-sales/blob/master/out/final.csv) [files](https://github.com/NYTimes/gun-sales/blob/master/out/gun-sales-by-year.csv) in the `out/` folder.
+The function can create the [PDF plots](https://github.com/NYTimes/gun-sales/blob/master/out/plots.pdf) and [CSV](https://github.com/NYTimes/gun-sales/blob/master/out/final.csv) [files](https://github.com/NYTimes/gun-sales/blob/master/out/gun-sales-by-year.csv) in the `out/` folder.
 
-For more explanation of what the script is doing, please read through the comments in [main.R](https://github.com/NYTimes/gun-sales/blob/master/main.R).
+For more explanation of what the file is doing, please read through the comments in [main.R](https://github.com/NYTimes/gun-sales/blob/master/main.R).
 
 ### Data issues
 
