@@ -1,4 +1,4 @@
-# Analysis of NCIS gun purchase background checks
+# Analysis of NICS gun purchase background checks
 
 Statistical analysis of monthly background checks of gun purchases for the New York Times story [What Drives Gun Sales: Terrorism,
 Obama and Calls for Restrictions](http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?).
