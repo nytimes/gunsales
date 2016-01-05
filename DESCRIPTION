@@ -11,6 +11,5 @@ Description: Statistical analysis of monthly background checks of gun purchases 
 License: Apache License (== 2)
 Depends: R (>= 2.10)
 LazyData: yes
-Imports: readr, dplyr, stringr, seasonal
-Depends: x13binary
+Imports: readr, dplyr, stringr, seasonal, x13binary
 RoxygenNote: 5.0.1
