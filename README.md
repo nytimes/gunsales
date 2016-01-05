@@ -1,23 +1,29 @@
-# Analysis of NCIS gun purchase background checks
+# Analysis of NICS gun purchase background checks
 
 Statistical analysis of monthly background checks of gun purchases for the New York Times story [What Drives Gun Sales: Terrorism,
 Obama and Calls for Restrictions](http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?).
 
 ### Pre-requisites
 
-This script uses the R package [seasonal](https://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf) for the seasonal adjustments, which itself uses a program called [X-13ARIMA-SEATS](). Binaries for this program are available for Windows only, but there is a very helpful [compilation guide for Mac OS X](https://github.com/christophsax/seasonal/wiki/Compiling-X-13ARIMA-SEATS-from-Source-for-OS-X). If that doesn't work, try downloading the program [from here](https://gist.github.com/gka/3b200d57b0db14d058f3).
+This package depends on the R package [seasonal](https://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf) for the seasonal adjustments, which itself uses a program called [X-13ARIMA-SEATS](). 
+Windows, OS X and Linux binaries for this program are installed by the R package [x13binary](https://github.com/x13org/x13binary).
 
-### Running the script
+You can currently install both via the [ghrr drat repo](http://ghrr.github.io/drat/)
 
-You can either open `main.R`  in RStudio and run it line by line or run the entire script as a whole on the command-line:
+### Running the main function
 
-```sh
-$ R --no-save < main.R
+Once the package has loaded, run
+
+```r
+analysis()
 ```
 
-The script creates the [PDF plots](https://github.com/NYTimes/gun-sales/blob/master/out/plots.pdf) and [CSV](https://github.com/NYTimes/gun-sales/blob/master/out/final.csv) [files](https://github.com/NYTimes/gun-sales/blob/master/out/gun-sales-by-year.csv) in the `out/` folder.
+or step-by-step in your favorite R environment as eg
+[RStudio](http://www.rstudio.com) or [ESS](http://ess.r-project.org).
 
-For more explanation of what the script is doing, please read through the comments in [main.R](https://github.com/NYTimes/gun-sales/blob/master/main.R).
+The function can create the [PDF plots](https://github.com/NYTimes/gun-sales/blob/master/out/plots.pdf) and [CSV](https://github.com/NYTimes/gun-sales/blob/master/out/final.csv) [files](https://github.com/NYTimes/gun-sales/blob/master/out/gun-sales-by-year.csv) in the `out/` folder.
+
+For more explanation of what the file is doing, please read through the comments in [main.R](https://github.com/NYTimes/gun-sales/blob/master/main.R).
 
 ### Data issues
 

@@ -17,7 +17,8 @@ ts_to_dataframe <- function(t, value.name='value') {
     df
 }
 
-state_data <- function(state_, normalize=T, adj_seasonal=T, column='guns_sold') {
+state_data <- function(all, state_, total, total.seas,
+                       normalize=T, adj_seasonal=T, column='guns_sold') {
     state <- state_ts(all, state_, column)
     if (adj_seasonal) {
         pct <- seas(state) %>% final()
