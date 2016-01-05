@@ -34,25 +34,26 @@ total.seas <- total <- state <- month.num <- NULL
 #' at \url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
 #'
 #' @examples
-#' \dontrun{
-#'    analysis()
-#' }
+#' analysis()
 analysis <- function(savePlots=FALSE, saveData=FALSE) {
 
     ## read source data
     #all <- read_csv('data/ncis_bystate_bymonth_bytype.csv', na = '#N/A')
     ## will 'LazyData: yes' and the data/ directory, 'all' is known
     
+    #data("alldata")              # load package datasets
+    #data("poptotal")
+
     ## estimate gun sales using formula by Jurgen Brauer, published here
     ## http://www.smallarmssurvey.org/fileadmin/docs/F-Working-papers/SAS-WP14-US-Firearms-Industry.pdf
     ##
     ## note: the column `multiple_corrected` is a copy of `multiple` in which
     ## we set the checks in the "multiple" category to 0 for California
-    all <- all %>% mutate(guns_sold=(handgun + longgun) * 1.1 + multiple_corrected * 2)
+    alldata <- alldata %>% mutate(guns_sold=(handgun + longgun) * 1.1 + multiple_corrected * 2)
     ##all <- mutate(all, guns_sold=(handgun + longgun) * 1.1 + multiple_corrected * 2)
 
     ## let's look at the total numbers
-    total <- all %>% state_ts('Totals', 'guns_sold')
+    total <- alldata %>% state_ts('Totals', 'guns_sold')
     ##total <- state_ts(all, 'Totals', 'guns_sold')
 
     ## save all plots as PDF
@@ -72,13 +73,13 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
     ##pop.total <- read_csv('data/population.csv') %>%
     ## will 'LazyData: yes' and the data/ directory, 'all' is known
 
-    pop.total <- pop.total %>%
+    poptotal <- poptotal %>%
         filter(year >= 2000) %>%
         filter(year < 2015 | month <= 11) %>%
         with(ts(res_pop, start=c(2000,1), frequency = 12))
    
     ## normalize gun sales by population
-    total.seas.pop <- total.seas / pop.total * 1000
+    total.seas.pop <- total.seas / poptotal * 1000
 
     ## plot gun sales normalized to population
     plot(total.seas / 280726, main='Estimated gun sales per 1000',
@@ -100,13 +101,13 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
     ## create a temporary data frame for computing the
     ## handgun_share and longgun_share columns
 
-    tmp.handguns <- all %>% state_ts('Totals', 'handgun') %>%
+    tmp.handguns <- alldata %>% state_ts('Totals', 'handgun') %>%
         seas %>% final %>% ts_to_dataframe('handgun')
-    tmp.longguns <- all %>% state_ts('Totals', 'longgun') %>%
+    tmp.longguns <- alldata %>% state_ts('Totals', 'longgun') %>%
         seas %>% final %>% ts_to_dataframe('longgun')
-    tmp.other <- all %>% state_ts('Totals', 'other') %>%
+    tmp.other <- alldata %>% state_ts('Totals', 'other') %>%
         seas %>% final %>% ts_to_dataframe('other')
-    tmp.multiple <- all %>% state_ts('Totals', 'multiple_corrected') %>%
+    tmp.multiple <- alldata %>% state_ts('Totals', 'multiple_corrected') %>%
         seas %>% final %>% ts_to_dataframe('multiple')
 
     ## merge above dataframes into one
@@ -142,7 +143,7 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
                      'Louisiana', 'Mississippi', 'Missouri')
 
     for (s in show_states) {
-        s.ts <- state_data(all, s, total, total.seas)
+        s.ts <- state_data(alldata, s, total, total.seas)
     
         ## plot staate data
         plot(s.ts, main=paste(s), xlab='pct of national gun sales')
@@ -157,11 +158,11 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
 
     ## compute handgun sales for DC: handung * 1.1 + multiple
 
-    dc.handgun_checks <- state_ts(all, 'District of Columbia', 'handgun', outer_zeros_to_na=F)
-    dc.multiple <- state_ts(all, 'District of Columbia', 'multiple', outer_zeros_to_na=F)
+    dc.handgun_checks <- state_ts(alldata, 'District of Columbia', 'handgun', outer_zeros_to_na=F)
+    dc.multiple <- state_ts(alldata, 'District of Columbia', 'multiple', outer_zeros_to_na=F)
     dc.handgun <- (dc.handgun_checks * 1.1 + dc.multiple + 1) %>% seas %>% final - 1
-    total.handgun <- (state_ts(all, 'Totals', 'handgun') * 1.1 +
-                      state_ts(all, 'Totals', 'multiple')) %>% seas %>% final
+    total.handgun <- (state_ts(alldata, 'Totals', 'handgun') * 1.1 +
+                      state_ts(alldata, 'Totals', 'multiple')) %>% seas %>% final
     dc.handgun.pct <- dc.handgun / total.handgun * 100000
 
     ## plot DC chart
@@ -183,7 +184,7 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
     }
     
     ## estimate how much more guns are sold missouri after law change
-    missouri <- state_data(all, 'Missouri', normalize = F, adj_seasonal = F)
+    missouri <- state_data(alldata, 'Missouri', normalize = F, adj_seasonal = F)
     missouri.avg_pre_2007 <- mean(missouri[73:84])
     missouri.avg_post_2008 <- mean(missouri[97:108])
     print(paste('Increase in monthly gun sales in Missouri =', missouri.avg_post_2008 - missouri.avg_pre_2007))
