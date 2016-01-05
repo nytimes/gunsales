@@ -56,11 +56,24 @@ lines(total.seas.pop, col='red')
 out_data <- ts_to_dataframe(total, 'guns_total') %>% 
     mutate(guns_total=round(guns_total, 3))
 
-out_data <- out_data %>% left_join(
-    ts_to_dataframe( total.seas.pop ) %>%
-        mutate(guns_total_per_1000=round(value,3)) %>%
-        select(year, month, guns_total_per_1000)
-    )
+# join in seasonal adjusted numbers
+temp <- ts_to_dataframe( total.seas ) %>%
+    mutate(guns_total_seas=round(value,3)) %>%
+    select(year, month, guns_total_seas)
+
+out_data <- out_data %>%
+    left_join(temp, c('year', 'month')) %>%
+    filter(year >= 2000)
+
+# join in population adjusted numbers
+temp <- ts_to_dataframe( total.seas.pop ) %>%
+    mutate(guns_total_per_1000=round(value,3)) %>%
+    select(year, month, guns_total_per_1000)
+
+out_data <- out_data %>%
+    left_join(temp, c('year', 'month'))
+
+
 
 # create a temporary data frame for computing the
 # handgun_share and longgun_share columns
