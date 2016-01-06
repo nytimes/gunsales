@@ -8,11 +8,18 @@ Obama and Calls for Restrictions](http://www.nytimes.com/interactive/2015/12/10/
 This package depends on the R package [seasonal](https://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf) for the seasonal adjustments, which itself uses a program called [X-13ARIMA-SEATS](). 
 Windows, OS X and Linux binaries for this program are installed by the R package [x13binary](https://github.com/x13org/x13binary).
 
-You can currently install both via the [ghrr drat repo](http://ghrr.github.io/drat/)
+You can currently install both via the [ghrr drat repo](http://ghrr.github.io/drat/), or directly from this repo via
+
+```bash
+$ git clone https://github.com/NYTimes/gun-sales.git
+$ cd gun-sales
+$ R CMD INSTALL .
+```
+
 
 ### Running the main function
 
-Once the package has loaded, run
+Once the package has loaded, run this in an R shell:
 
 ```r
 analysis()
