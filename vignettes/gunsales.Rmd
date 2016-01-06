@@ -1,0 +1,196 @@
+---
+title: "Statistical Analysis of Monthly Background Checks of Gun Purchases"
+author: " Gregor Aisch, Josh Keller and Dirk Eddelbuettel"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, setup, include=FALSE}
+library(gunsales)
+library(seasonal)
+library(dplyr)
+library(stringr)
+## might just be easier to export these directly from the package...
+state_ts <- gunsales:::state_ts
+ts_to_dataframe <- gunsales:::ts_to_dataframe
+state_data <- gunsales:::state_data
+
+```
+
+## About
+
+This document provides the analysis from the [New York Times](http://www,nytimes.com) 
+on-line article ["What Drives Gun Sales: Terrorism, Obama and Calls for Restrictions"](http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?). The [R](http://www.r-project.org) code underlying the analysis is provided
+in the [GitHub](http://www.github.com) repository [gun-sales](https://github.com/NYTimes/gun-sales) which contains the R package 
+
+
+## Analysis
+
+### Data Load
+
+The `alldata` data set is included in the package.
+
+Here estimate gun sales using formula by Jurgen Brauer, published [here](http://www.smallarmssurvey.org/fileadmin/docs/F-Working-papers/SAS-WP14-US-Firearms-Industry.pdf).
+
+```{r, initialDataAndPlot,fig.width=7}
+## note: the column `multiple_corrected` is a copy of `multiple` in which
+## we set the checks in the "multiple" category to 0 for California
+
+alldata <- alldata %>% mutate(guns_sold=(handgun + longgun) * 1.1 + multiple_corrected * 2)
+
+## let's look at the total numbers
+total <- alldata %>% state_ts('Totals', 'guns_sold')
+
+## plot total guns sold
+plot(total / 1e6, main='Total estimated gun sales', ylab='in million', xlab='')
+
+## compute seasonally adjusted gun sales
+total.seas <- total %>% seas %>% final
+
+## plot seasonally adjusted gun sales
+plot(total.seas / 1e6, main='Total estimated gun sales', ylab='in million', xlab='seasonal adjused')
+```
+
+
+Next, we adjust for population growth. Here `poptotal` is data set with US Census data included in the package.
+
+```{r, popGrowth,fig.width=7}
+poptotal <- poptotal %>%
+    filter(year >= 2000) %>%
+    filter(year < 2015 | month <= 11) %>%
+    with(ts(res_pop, start=c(2000,1), frequency = 12))
+   
+## normalize gun sales by population
+total.seas.pop <- total.seas / poptotal * 1000
+
+## plot gun sales normalized to population
+plot(total.seas / 280726, main='Estimated gun sales per 1000',
+    xlab='red = adjusted for population growth', ylab='')
+## and add the not normalized version for comparison
+lines(total.seas.pop, col='red')
+```
+
+
+The next part looks at hand gun versus long guns.
+
+```{r, dataWorkLongGunHandGun,fig.width=7}
+## create a new data frame that eventually stores all the
+## data we need in the final piece
+out_data <- ts_to_dataframe(total, 'guns_total') %>% 
+    mutate(guns_total=round(guns_total, 3))
+
+out_data <- out_data %>% left_join(
+                             ts_to_dataframe( total.seas.pop ) %>%
+                             mutate(guns_total_per_1000=round(value,3)) %>%
+                             select(year, month, guns_total_per_1000)
+                         )
+
+## join in seasonal adjusted numbers
+temp <- ts_to_dataframe( total.seas ) %>%
+    mutate(guns_total_seas=round(value,3)) %>%
+    select(year, month, guns_total_seas)
+
+out_data <- out_data %>%
+    left_join(temp, c('year', 'month')) %>%
+    filter(year >= 2000)
+
+## join in population adjusted numbers
+temp <- ts_to_dataframe( total.seas.pop ) %>%
+    mutate(guns_total_per_1000=round(value,3)) %>%
+    select(year, month, guns_total_per_1000)
+
+out_data <- out_data %>%
+    left_join(temp, c('year', 'month'))
+
+## create a temporary data frame for computing the
+## handgun_share and longgun_share columns
+
+tmp.handguns <- alldata %>% state_ts('Totals', 'handgun') %>%
+    seas %>% final %>% ts_to_dataframe('handgun')
+tmp.longguns <- alldata %>% state_ts('Totals', 'longgun') %>%
+    seas %>% final %>% ts_to_dataframe('longgun')
+tmp.other <- alldata %>% state_ts('Totals', 'other') %>%
+    seas %>% final %>% ts_to_dataframe('other')
+tmp.multiple <- alldata %>% state_ts('Totals', 'multiple_corrected') %>%
+    seas %>% final %>% ts_to_dataframe('multiple')
+
+## merge above dataframes into one
+temp <- tmp.handguns %>%
+    left_join(tmp.longguns, c('year', 'month')) %>%
+    left_join(tmp.other, c('year', 'month')) %>%
+    left_join(tmp.multiple, c('year', 'month'))
+
+## convert NAs to 0 in column other
+temp$other[is.na(temp$other)] <- 0
+
+## compute the handgun/longgun share
+temp <- temp %>%
+    mutate(handgun_share=round(handgun / (handgun + longgun + other + multiple * 0.5), 4)) %>%
+    mutate(longgun_share=round(longgun / (handgun + longgun + other + multiple * 0.5), 4)) %>% 
+    select(year, month, handgun_share, longgun_share)
+
+## join into master data frame
+out_data <- out_data %>%
+    left_join(temp, c('year', 'month')) %>%
+    filter(year >= 2000)
+
+## plot handgun/longgun 
+temp$time <- temp$year + (temp$month-1) / 12
+
+temp %>% with(plot(time, longgun_share, type='l', col='blue',
+                   ylim=c(0.2,0.8), main='Long guns vs handguns',
+                   ylab='', xlab='red = handguns, blue = long guns'))
+temp %>% with(lines(time, handgun_share, col='red'))
+```
+
+Analysis by state 
+
+```{r, byState}
+## plot percent of national for selected states 
+show_states <- c('New Jersey', 'Maryland', 'Georgia',
+                 'Louisiana', 'Mississippi', 'Missouri')
+
+for (s in show_states) {
+    s.ts <- state_data(alldata, s, total, total.seas)
+
+    ## plot staate data
+    plot(s.ts, main=paste(s), xlab='pct of national gun sales')
+
+    ## merge with out_data
+    temp <- ts_to_dataframe(s.ts) %>% mutate(value=round(value,3))
+    colnames(temp) <- c('year', 'month', str_replace_all(str_to_lower(s), ' ', '_'))
+    out_data <- out_data %>% left_join(temp, c('year', 'month'))
+}
+
+#head(out_data)
+```
+
+Next a look at DC and Missouri
+
+```{r, DC}
+## compute handgun sales for DC: handung * 1.1 + multiple
+
+dc.handgun_checks <- state_ts(alldata, 'District of Columbia', 'handgun', outer_zeros_to_na=F)
+dc.multiple <- state_ts(alldata, 'District of Columbia', 'multiple', outer_zeros_to_na=F)
+dc.handgun <- (dc.handgun_checks * 1.1 + dc.multiple + 1) %>% seas %>% final - 1
+total.handgun <- (state_ts(alldata, 'Totals', 'handgun') * 1.1 +
+                  state_ts(alldata, 'Totals', 'multiple')) %>% seas %>% final
+dc.handgun.pct <- dc.handgun / total.handgun * 100000
+
+## plot DC chart
+plot(dc.handgun.pct, main='Washington D.C.', xlab='sales per 100,000 national handguns')
+
+## merge with out_data
+temp <- ts_to_dataframe(round(dc.handgun.pct, 1), 'dc_handguns_per_100k_national_sales')
+out_data <- out_data %>% left_join(temp, c('year', 'month'))
+
+## estimate how much more guns are sold missouri after law change
+missouri <- state_data(alldata, 'Missouri', normalize = F, adj_seasonal = F)
+missouri.avg_pre_2007 <- mean(missouri[73:84])
+missouri.avg_post_2008 <- mean(missouri[97:108])
+cat('Increase in monthly gun sales in Missouri =', missouri.avg_post_2008 - missouri.avg_pre_2007, "\n")   
+```
