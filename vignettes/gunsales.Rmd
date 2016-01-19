@@ -46,13 +46,15 @@ alldata <- alldata %>% mutate(guns_sold=(handgun + longgun) * 1.1 + multiple_cor
 total <- alldata %>% state_ts('Totals', 'guns_sold')
 
 ## plot total guns sold
+op <- par(mar=c(4.5,4.5,2,1))
 plot(total / 1e6, main='Total estimated gun sales', ylab='in million', xlab='')
 
 ## compute seasonally adjusted gun sales
 total.seas <- total %>% seas %>% final
 
 ## plot seasonally adjusted gun sales
-plot(total.seas / 1e6, main='Total estimated gun sales', ylab='in million', xlab='seasonal adjused')
+plot(total.seas / 1e6, main='Total estimated gun sales', ylab='in million', xlab='seasonally adjused')
+par(op)
 ```
 
 
@@ -149,11 +151,12 @@ temp %>% with(lines(time, handgun_share, col='red'))
 
 Analysis by state 
 
-```{r, byState}
+```{r, byState, fig.width=7, fig.height=7}
 ## plot percent of national for selected states 
 show_states <- c('New Jersey', 'Maryland', 'Georgia',
                  'Louisiana', 'Mississippi', 'Missouri')
 
+op <- par(mfrow=c(3,2), mar=c(2,3,3,1))
 for (s in show_states) {
     s.ts <- state_data(alldata, s, total, total.seas)
 
@@ -165,13 +168,13 @@ for (s in show_states) {
     colnames(temp) <- c('year', 'month', str_replace_all(str_to_lower(s), ' ', '_'))
     out_data <- out_data %>% left_join(temp, c('year', 'month'))
 }
-
+par(op)
 #head(out_data)
 ```
 
 Next a look at DC and Missouri
 
-```{r, DC}
+```{r, DC, fig.width=7}
 ## compute handgun sales for DC: handung * 1.1 + multiple
 
 dc.handgun_checks <- state_ts(alldata, 'District of Columbia', 'handgun', outer_zeros_to_na=F)
