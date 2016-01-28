@@ -5,15 +5,13 @@ Obama and Calls for Restrictions](http://www.nytimes.com/interactive/2015/12/10/
 
 ### Pre-requisites
 
-This package depends on the R package [seasonal](https://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf) for the seasonal adjustments, which itself uses a program called [X-13ARIMA-SEATS](). 
+This package depends on the R package [seasonal](https://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf) for the seasonal adjustments, which itself uses a program called [X-13ARIMA-SEATS](https://www.census.gov/srd/www/x13as/). 
 Windows, OS X and Linux binaries for this program are installed by the R package [x13binary](https://github.com/x13org/x13binary).
 
-You can currently install both via the [ghrr drat repo](http://ghrr.github.io/drat/), or directly from this repo via
+Both packages are now on CRAN and can be installed the usual way via
 
-```bash
-$ git clone https://github.com/NYTimes/gun-sales.git
-$ cd gun-sales
-$ R CMD INSTALL .
+```r
+install.packages("seasonal")
 ```
 
 
@@ -28,9 +26,9 @@ analysis()
 or step-by-step in your favorite R environment as eg
 [RStudio](http://www.rstudio.com) or [ESS](http://ess.r-project.org).
 
-The function can create the [PDF plots](https://github.com/NYTimes/gun-sales/blob/master/out/plots.pdf) and [CSV](https://github.com/NYTimes/gun-sales/blob/master/out/final.csv) [files](https://github.com/NYTimes/gun-sales/blob/master/out/gun-sales-by-year.csv) in the `out/` folder.
+The function can create the PDF plots and CSV files in the `out/` folder.
 
-For more explanation of what the file is doing, please read through the comments in [main.R](https://github.com/NYTimes/gun-sales/blob/master/main.R).
+For more explanation of what the file is doing, please read through the comments in `main.R`..
 
 ### Data issues
 
@@ -42,4 +40,4 @@ BuzzFeed also released the same dataset on [Github](https://github.com/BuzzFeedN
 
 To convert background checks into estimated sales, we relied on a method suggested in the [Small Arms Survey](http://www.smallarmssurvey.org/fileadmin/docs/F-Working-papers/SAS-WP14-US-Firearms-Industry.pdf) by Jurgen Brauer, a professor at Georgia Regents University. Each long gun and handgun check was counted as 1.1 sales. Each multiple-gun check was counted as two sales. Permit checks and other types of checks were omitted. The multiplier is an estimate based on Mr. Brauer's interviews with gun shop owners.
 
-Note: In our [computation](https://github.com/NYTimes/gun-sales/blob/master/main.R#L20), we excluded background checks for the "multiple" category in California because they followed an unusual pattern that did not match California gun sales data.
+Note: In our computation, we excluded background checks for the "multiple" category in California because they followed an unusual pattern that did not match California gun sales data.
