@@ -1,4 +1,3 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-R/needs.R
 out
