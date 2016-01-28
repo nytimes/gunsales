@@ -23,7 +23,7 @@ state_data <- gunsales:::state_data
 
 ## About
 
-This document provides the analysis from the [New York Times](http://www,nytimes.com) 
+This document provides the analysis from the [New York Times](http://www.nytimes.com) 
 on-line article ["What Drives Gun Sales: Terrorism, Obama and Calls for Restrictions"](http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?). The [R](http://www.r-project.org) code underlying the analysis is provided
 in the [GitHub](http://www.github.com) repository [gun-sales](https://github.com/NYTimes/gun-sales) which contains the R package 
 
@@ -34,7 +34,7 @@ in the [GitHub](http://www.github.com) repository [gun-sales](https://github.com
 
 The `alldata` data set is included in the package.
 
-Here estimate gun sales using formula by Jurgen Brauer, published [here](http://www.smallarmssurvey.org/fileadmin/docs/F-Working-papers/SAS-WP14-US-Firearms-Industry.pdf).
+Here we estimate gun sales using formula by Jurgen Brauer, published [here](http://www.smallarmssurvey.org/fileadmin/docs/F-Working-papers/SAS-WP14-US-Firearms-Industry.pdf).
 
 ```{r, initialDataAndPlot,fig.width=7}
 ## note: the column `multiple_corrected` is a copy of `multiple` in which
@@ -195,5 +195,5 @@ out_data <- out_data %>% left_join(temp, c('year', 'month'))
 missouri <- state_data(alldata, 'Missouri', normalize = F, adj_seasonal = F)
 missouri.avg_pre_2007 <- mean(missouri[73:84])
 missouri.avg_post_2008 <- mean(missouri[97:108])
-cat('Increase in monthly gun sales in Missouri =', missouri.avg_post_2008 - missouri.avg_pre_2007, "\n")   
+#cat('Increase in monthly gun sales in Missouri =', missouri.avg_post_2008 - missouri.avg_pre_2007, "\n")   
 ```
