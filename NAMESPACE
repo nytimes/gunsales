@@ -1,5 +1,6 @@
 #exportPattern("^[[:alpha:]]+")
 export("analysis")
+export("gganalysis")
 
 importFrom("readr", "read_csv", "write_csv")
 importFrom("dplyr", "mutate", "%>%", "filter", "left_join", "select", "group_by",
@@ -11,3 +12,6 @@ importFrom("graphics", "lines", "plot")
 importFrom("stats", "time", "ts")
 importFrom("utils", "head", "write.csv")
 importFrom("x13binary", "checkX13binary")
+importFrom("zoo", "zoo", "as.yearmon", "index", "coredata", "as.zoo")
+importFrom("data.table", "data.table", ":=")
+import(ggplot2)
