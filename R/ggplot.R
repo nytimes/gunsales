@@ -1,27 +1,13 @@
 
-## load Josh Katz' needs() function
-##source('needs.R')
-## or not, as we don't believe in reinventing the packaging system for R
+## variant of main::analysis() using ggplot
 
-## load our helper functions
-##source('functions.R')
-
-## this script uses the `seasonal` package, which
-## itself depends on `X13`
-##Sys.setenv(X13_PATH = ".")
-## the dev version of seasonal uses the dev version of x13binary to install and auto-detect this
-
-## load packages we need
-## needs(readr, dplyr, seasonal, stringr)
-
-## this is hack -- but with the dplyr scoping this 'appear' to be global
+## this is hack -- but with the dplyr scoping this 'appears' to be global
 ## so we silence 'R CMD check'
 handgun <- longgun <- multiple_corrected <- year <- month <- res_pop <- NULL
-guns_total <- value <- guns_total_per_1000 <- other <- multiple <- NULL
-handgun_share <- longgun_share <- NULL
+guns_total <- value <- guns_total_per_1000 <- other <- multiple <- handgun_share <- longgun_share <- NULL
 #
 total.seas <- guns_total_seas <- total <- state <- month.num <- NULL
-
+Date <- Sales <- variable <- Value <- h <- NULL
 
 #' Run Statistical Analysis of Monthly Background Checks of Gun Purchase
 #'
@@ -35,16 +21,12 @@ total.seas <- guns_total_seas <- total <- state <- month.num <- NULL
 #' at \url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
 #'
 #' @examples
-#' analysis()
-analysis <- function(savePlots=FALSE, saveData=FALSE) {
+#' \dontrun{gganalysis()}
+gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
 
-    ## read source data
-    #all <- read_csv('data/ncis_bystate_bymonth_bytype.csv', na = '#N/A')
-    ## will 'LazyData: yes' and the data/ directory, 'all' is known
-    
     data("alldata", envir=environment())              # load package datasets
     data("poptotal", envir=environment())
-
+    
     ## estimate gun sales using formula by Jurgen Brauer, published here
     ## http://www.smallarmssurvey.org/fileadmin/docs/F-Working-papers/SAS-WP14-US-Firearms-Industry.pdf
     ##
@@ -58,18 +40,30 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
     ##total <- state_ts(all, 'Totals', 'guns_sold')
 
     ## save all plots as PDF
-    if (savePlots) pdf("out/plots.pdf", width=9, height=4)
+    if (savePlots) pdf("out/ggplots.pdf", width=9, height=4)
 
     ## plot total guns sold
-    plot(total / 1e6, main='Total estimated gun sales', ylab='in million', xlab='')
+    #plot(total / 1e6, main='Total estimated gun sales', ylab='in million', xlab='')
 
+    ztotal <- zoo(total)
+    zdf <- data.frame(Date=as.Date(as.yearmon(index(ztotal))), 
+                      Sales=coredata(ztotal/1e6))
+    print(ggplot(data=zdf, aes(x=Date, y=Sales)) + geom_line() + scale_x_date() + 
+          ggtitle("Total estimated gun sales") + ylab("in million") + xlab(""))
+    
+    
     ## compute seasonally adjusted gun sales
     total.seas <- total %>% seas %>% final
     ##total.seas <- final(seas(total))
 
     ## plot seasonally adjusted gun sales
-    plot(total.seas / 1e6, main='Total estimated gun sales', ylab='in million', xlab='seasonal adjused')
-
+    ztotseas <- zoo(total.seas)
+    ztsdf <- data.frame(Date=as.Date(as.yearmon(index(ztotseas))), 
+                        Sales=coredata(ztotseas/1e6))
+    
+    #plot(total.seas / 1e6, main='Total estimated gun sales', ylab='in million', xlab='seasonally adjused')
+    print(ggplot(data=ztsdf, aes(x=Date, y=Sales)) + geom_line() + scale_x_date() +
+        ggtitle("Total estimated gun sales") + ylab("in million") + xlab("seasonally adjusted"))
     ## read population data
     ##pop.total <- read_csv('data/population.csv') %>%
     ## will 'LazyData: yes' and the data/ directory, 'all' is known
@@ -83,11 +77,24 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
     total.seas.pop <- total.seas / poptotal * 1000
 
     ## plot gun sales normalized to population
-    plot(total.seas / 280726, main='Estimated gun sales per 1000',
-         xlab='red = adjusted for population growth', ylab='')
+    #plot(total.seas / 280726, main='Estimated gun sales per 1000',
+    #     xlab='red = adjusted for population growth', ylab='')
     ## and add the not normalized version for comparison
-    lines(total.seas.pop, col='red')
+    #lines(total.seas.pop, col='red')
 
+    ztotseaspop <- zoo(total.seas.pop)
+    ztspdf <- data.frame(Date=as.Date(as.yearmon(index(ztotseaspop))),
+                         Sales=coredata(ztotseas/280726),
+                         SalesAdjusted=coredata(ztotseaspop))
+    dt <- data.table::data.table(ztspdf)
+    ndt <- data.table::melt(dt, measure.vars=c("Sales", "SalesAdjusted"), id.var="Date")
+    print(ggplot(data=ndt, aes(x=Date, y=value)) + geom_line(aes(colour=variable)) + scale_x_date() + 
+        ggtitle("Estimated gun sales per 1000") + xlab("red = adjusted for population growth") +
+        ylab("") + theme(legend.position="bottom") + theme(legend.title=element_blank()) +
+        scale_colour_manual(values=c("black", "red")))
+
+    
+    
     ## create a new data frame that eventually stores all the
     ## data we need in the final piece
     out_data <- ts_to_dataframe(total, 'guns_total') %>% 
@@ -151,11 +158,21 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
     ## plot handgun/longgun 
     temp$time <- temp$year + (temp$month-1) / 12
 
-    temp %>% with(plot(time, longgun_share, type='l', col='blue',
-                       ylim=c(0.2,0.8), main='Long guns vs handguns',
-                       ylab='', xlab='red = handguns, blue = long guns'))
-    temp %>% with(lines(time, handgun_share, col='red'))
+    #temp %>% with(plot(time, longgun_share, type='l', col='blue',
+    #                   ylim=c(0.2,0.8), main='Long guns vs handguns',
+    #                   ylab='', xlab='red = handguns, blue = long guns'))
+    #temp %>% with(lines(time, handgun_share, col='red'))
 
+    tt <- data.table::data.table(temp)
+    ntt <- data.table::melt(tt, measure.vars=c("handgun_share", "longgun_share"), id.var="time")
+    ntt[,time := as.Date(as.yearmon(time))]
+    print(ggplot(data=ntt, aes(x=time, y=value)) + geom_line(aes(colour=variable)) + scale_x_date() +
+          ggtitle("Long guns vs handguns") +
+            xlab("red = handguns, blue = long guns") + ylab("") +
+            theme(legend.position="none") + #theme(legend.title=element_blank()) +
+            scale_colour_manual(values=c("blue", "red")))
+
+    
     ## plot percent of national for selected states 
     show_states <- c('New Jersey', 'Maryland', 'Georgia',
                      'Louisiana', 'Mississippi', 'Missouri')
@@ -164,7 +181,7 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
         s.ts <- state_data(alldata, s, total, total.seas)
     
         ## plot staate data
-        plot(s.ts, main=paste(s), xlab='pct of national gun sales')
+        #plot(s.ts, main=paste(s), xlab='pct of national gun sales')
     
         ## merge with out_data
         temp <- ts_to_dataframe(s.ts) %>% mutate(value=round(value,3))
@@ -174,6 +191,22 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
 
     head(out_data)
 
+    ## do it again, but less crazy
+    rl <- lapply(show_states, function(s) {
+        s.ts <- as.zoo(state_data(alldata, s, total, total.seas))
+        #print(head(s.ts))
+        zts <- zoo(coredata(s.ts), order.by=as.Date(as.yearmon(index(s.ts))))
+        #nd <- cbind(nd, zts)
+    })
+    nd <- do.call(merge, rl)
+    colnames(nd) <- show_states
+    ndf <- data.table::data.table(Date=index(nd), coredata(nd))
+    pdf <- data.table::melt(ndf, id.vars="Date")
+    
+    print(ggplot(data=pdf, aes(x=Date, y=value)) + geom_line() + 
+        facet_wrap( ~ variable) + 
+        xlab("Percentage of National Sales") + ylab(""))
+    
     ## compute handgun sales for DC: handung * 1.1 + multiple
 
     dc.handgun_checks <- state_ts(alldata, 'District of Columbia', 'handgun', outer_zeros_to_na=F)
@@ -184,8 +217,14 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
     dc.handgun.pct <- dc.handgun / total.handgun * 100000
 
     ## plot DC chart
-    plot(dc.handgun.pct, main='Washington D.C.', xlab='sales per 100,000 national handguns')
+    #plot(dc.handgun.pct, main='Washington D.C.', xlab='sales per 100,000 national handguns')
 
+    dcz <- as.zoo(dc.handgun.pct)
+    dcdf <- data.frame(Date=as.Date(as.yearmon(index(dcz))), Value=coredata(dcz))
+    print(ggplot(data=dcdf, aes(x=Date, y=Value)) + geom_line() +
+                 ggtitle("Washington D.C.") + xlab("Sales per 100,000 national handguns"))
+    
+    
     ## merge with out_data
     temp <- ts_to_dataframe(round(dc.handgun.pct, 1), 'dc_handguns_per_100k_national_sales')
     out_data <- out_data %>% left_join(temp, c('year', 'month'))
@@ -205,7 +244,7 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
     missouri <- state_data(alldata, 'Missouri', normalize = F, adj_seasonal = F)
     missouri.avg_pre_2007 <- mean(missouri[73:84])
     missouri.avg_post_2008 <- mean(missouri[97:108])
-    print(paste('Increase in monthly gun sales in Missouri =', missouri.avg_post_2008 - missouri.avg_pre_2007))
+    #print(paste('Increase in monthly gun sales in Missouri =', missouri.avg_post_2008 - missouri.avg_pre_2007))
 
     ## save plots
     if (savePlots) dev.off()
