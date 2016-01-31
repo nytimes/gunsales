@@ -11,7 +11,7 @@ Windows, OS X and Linux binaries for this program are installed by the R package
 Both packages are now on CRAN and can be installed the usual way via
 
 ```r
-install.packages("seasonal")
+> install.packages(c("seasonal", "gunsales"))
 ```
 
 
@@ -20,7 +20,8 @@ install.packages("seasonal")
 Once the package has loaded, run this in an R shell:
 
 ```r
-analysis()
+> library(gunsales)
+> analysis()
 ```
 
 or step-by-step in your favorite R environment as eg
