@@ -18,7 +18,7 @@ gganalysis(savePlots = FALSE, saveData = FALSE)
 Run Statistical Analysis of Monthly Background Checks of Gun Purchase
 }
 \examples{
-\dontrun{gganalysis()}
+gganalysis()
 }
 \author{
 Gregor Aisch and Josh Keller wrote the R code; Dirk Eddelbuettel created and maintains the package.

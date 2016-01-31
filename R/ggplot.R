@@ -21,7 +21,7 @@ Date <- Sales <- variable <- Value <- h <- NULL
 #' at \url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
 #'
 #' @examples
-#' \dontrun{gganalysis()}
+#' gganalysis()
 gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
 
     data("alldata", envir=environment())              # load package datasets
