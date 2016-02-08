@@ -21,7 +21,7 @@ Date <- Sales <- variable <- Value <- h <- NULL
 #' at \url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
 #'
 #' @examples
-#' \dontrun{gganalysis()}
+#' gganalysis()
 gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
 
     data("alldata", envir=environment())              # load package datasets
@@ -49,7 +49,8 @@ gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
     zdf <- data.frame(Date=as.Date(as.yearmon(index(ztotal))), 
                       Sales=coredata(ztotal/1e6))
     print(ggplot(data=zdf, aes(x=Date, y=Sales)) + geom_line() + scale_x_date() + 
-          ggtitle("Total estimated gun sales") + ylab("in million") + xlab(""))
+          ggtitle("Total estimated gun sales") + ylab("in million") + xlab("") + 
+              theme_bw(base_size=11))
     
     
     ## compute seasonally adjusted gun sales
@@ -63,7 +64,8 @@ gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
     
     #plot(total.seas / 1e6, main='Total estimated gun sales', ylab='in million', xlab='seasonally adjused')
     print(ggplot(data=ztsdf, aes(x=Date, y=Sales)) + geom_line() + scale_x_date() +
-        ggtitle("Total estimated gun sales") + ylab("in million") + xlab("seasonally adjusted"))
+        ggtitle("Total estimated gun sales") + ylab("in million") + 
+            xlab("seasonally adjusted") + theme_bw(base_size=11))
     ## read population data
     ##pop.total <- read_csv('data/population.csv') %>%
     ## will 'LazyData: yes' and the data/ directory, 'all' is known
@@ -90,11 +92,10 @@ gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
     ndt <- data.table::melt(dt, measure.vars=c("Sales", "SalesAdjusted"), id.var="Date")
     print(ggplot(data=ndt, aes(x=Date, y=value)) + geom_line(aes(colour=variable)) + scale_x_date() + 
         ggtitle("Estimated gun sales per 1000") + xlab("red = adjusted for population growth") +
-        ylab("") + theme(legend.position="bottom") + theme(legend.title=element_blank()) +
-        scale_colour_manual(values=c("black", "red")))
+        ylab("") + scale_colour_manual(values=c("black", "red")) + 
+            theme_bw(base_size=11) +
+            theme(legend.title=element_blank(), legend.position="bottom")) 
 
-    
-    
     ## create a new data frame that eventually stores all the
     ## data we need in the final piece
     out_data <- ts_to_dataframe(total, 'guns_total') %>% 
@@ -169,6 +170,7 @@ gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
     print(ggplot(data=ntt, aes(x=time, y=value)) + geom_line(aes(colour=variable)) + scale_x_date() +
           ggtitle("Long guns vs handguns") +
             xlab("red = handguns, blue = long guns") + ylab("") +
+            theme_bw(base_size=11) +
             theme(legend.position="none") + #theme(legend.title=element_blank()) +
             scale_colour_manual(values=c("blue", "red")))
 
@@ -205,6 +207,7 @@ gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
     
     print(ggplot(data=pdf, aes(x=Date, y=value)) + geom_line() + 
         facet_wrap( ~ variable) + 
+        theme_bw(base_size=11) +
         xlab("Percentage of National Sales") + ylab(""))
     
     ## compute handgun sales for DC: handung * 1.1 + multiple
@@ -222,6 +225,7 @@ gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
     dcz <- as.zoo(dc.handgun.pct)
     dcdf <- data.frame(Date=as.Date(as.yearmon(index(dcz))), Value=coredata(dcz))
     print(ggplot(data=dcdf, aes(x=Date, y=Value)) + geom_line() +
+                 theme_bw(base_size=11) +
                  ggtitle("Washington D.C.") + xlab("Sales per 100,000 national handguns"))
     
     

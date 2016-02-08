@@ -204,7 +204,8 @@ total <- alldata %>% state_ts('Totals', 'guns_sold')
 ztotal <- zoo(total)
 zdf <- data.frame(Date=as.Date(as.yearmon(index(ztotal))), 
                   Sales=coredata(ztotal/1e6))
-print(ggplot(data=zdf, aes(x=Date, y=Sales)) + geom_line() + scale_x_date() + 
+print(ggplot(data=zdf, aes(x=Date, y=Sales)) + geom_line() +
+      scale_x_date() + theme_bw(base_size=11) +
       ggtitle("Total estimated gun sales") + ylab("in million") + xlab(""))
 ## compute seasonally adjusted gun sales
 total.seas <- total %>% seas %>% final
@@ -217,6 +218,7 @@ ztsdf <- data.frame(Date=as.Date(as.yearmon(index(ztotseas))),
 
 #plot(total.seas / 1e6, main='Total estimated gun sales', ylab='in million', xlab='seasonally adjused')
 print(ggplot(data=ztsdf, aes(x=Date, y=Sales)) + geom_line() + scale_x_date() +
+      theme_bw(base_size=11) +
       ggtitle("Total estimated gun sales") + ylab("in million") + xlab("seasonally adjusted"))
 ```
 
@@ -241,9 +243,10 @@ ztspdf <- data.frame(Date=as.Date(as.yearmon(index(ztotseaspop))),
                      SalesAdjusted=coredata(ztotseaspop))
 dt <- data.table::data.table(ztspdf)
 ndt <- data.table::melt(dt, measure.vars=c("Sales", "SalesAdjusted"), id.var="Date")
-print(ggplot(data=ndt, aes(x=Date, y=value)) + geom_line(aes(colour=variable)) + scale_x_date() + 
+print(ggplot(data=ndt, aes(x=Date, y=value)) +
+      geom_line(aes(colour=variable)) + scale_x_date() + theme_bw(base_size=11) +
     ggtitle("Estimated gun sales per 1000") + xlab("red = adjusted for population growth") +
-    ylab("") + theme(legend.position="bottom") + theme(legend.title=element_blank()) +
+    ylab("") + theme(legend.position="bottom", legend.title=element_blank()) +
     scale_colour_manual(values=c("black", "red")))
 ```
 
@@ -322,9 +325,10 @@ ntt <- data.table::melt(tt, measure.vars=c("handgun_share", "longgun_share"), id
 ntt[,time := as.Date(as.yearmon(time))]
 print(ggplot(data=ntt, aes(x=time, y=value)) + geom_line(aes(colour=variable)) + scale_x_date() +
       ggtitle("Long guns vs handguns") +
-        xlab("red = handguns, blue = long guns") + ylab("") +
-        theme(legend.position="none") + #theme(legend.title=element_blank()) +
-        scale_colour_manual(values=c("blue", "red")))
+      theme_bw(base_size=11) +
+      xlab("red = handguns, blue = long guns") + ylab("") +
+      theme(legend.position="none") + #theme(legend.title=element_blank()) +
+      scale_colour_manual(values=c("blue", "red")))
 ```
 
 ```{r, byState2, fig.width=7, fig.height=7,echo=FALSE}
@@ -343,8 +347,9 @@ ndf <- data.table::data.table(Date=index(nd), coredata(nd))
 pdf <- data.table::melt(ndf, id.vars="Date")
 
 print(ggplot(data=pdf, aes(x=Date, y=value)) + geom_line() + 
-    facet_wrap( ~ variable) + 
-    xlab("Percentage of National Sales") + ylab(""))
+      facet_wrap( ~ variable) +
+      theme_bw(base_size=11) +
+      xlab("Percentage of National Sales") + ylab(""))
 ```
 
 ```{r, DC2, fig.width=7,echo=FALSE}
@@ -360,6 +365,6 @@ dc.handgun.pct <- dc.handgun / total.handgun * 100000
 
 dcz <- as.zoo(dc.handgun.pct)
 dcdf <- data.frame(Date=as.Date(as.yearmon(index(dcz))), Value=coredata(dcz))
-print(ggplot(data=dcdf, aes(x=Date, y=Value)) + geom_line() +
+print(ggplot(data=dcdf, aes(x=Date, y=Value)) + geom_line() + theme_bw(base_size=11) +
              ggtitle("Washington D.C.") + xlab("Sales per 100,000 national handguns"))
 ```
