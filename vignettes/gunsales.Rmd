@@ -26,7 +26,7 @@ state_data <- gunsales:::state_data
 
 This document provides the analysis from the [New York Times](http://www.nytimes.com) 
 on-line article ["What Drives Gun Sales: Terrorism, Obama and Calls for Restrictions"](http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?). The [R](http://www.r-project.org) code underlying the analysis is provided
-in the [GitHub](http://www.github.com) repository [gun-sales](https://github.com/NYTimes/gun-sales) which contains the R package 
+in the [GitHub](http://www.github.com) repository [gunsales](https://github.com/NYTimes/gunsales) which contains the R package 
 
 
 ## Analysis I: Base Plots
@@ -58,7 +58,7 @@ par(op)
 ```{r, popGrowth,fig.width=7,echo=FALSE}
 poptotal <- poptotal %>%
     filter(year >= 2000) %>%
-    filter(year < 2015 | month <= 11) %>%
+    #filter(year < 2015 | month <= 11) %>%
     with(ts(res_pop, start=c(2000,1), frequency = 12))
    
 ## normalize gun sales by population
@@ -225,7 +225,7 @@ print(ggplot(data=ztsdf, aes(x=Date, y=Sales)) + geom_line() + scale_x_date() +
 ```{r, popGrowth2,fig.width=7,echo=FALSE}
 poptotal <- poptotal %>%
     filter(year >= 2000) %>%
-    filter(year < 2015 | month <= 11) %>%
+    #filter(year < 2015 | month <= 11) %>%
     with(ts(res_pop, start=c(2000,1), frequency = 12))
 
 ## normalize gun sales by population
