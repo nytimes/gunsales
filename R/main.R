@@ -14,8 +14,8 @@
 ## load packages we need
 ## needs(readr, dplyr, seasonal, stringr)
 
-## this is hack -- but with the dplyr scoping this 'appear' to be global
-## so we silence 'R CMD check'
+## this is hack -- but with the dplyr scoping these 'appear' to be global
+## so we silence 'R CMD check' by actually creating variables
 handgun <- longgun <- multiple_corrected <- year <- month <- res_pop <- NULL
 guns_total <- value <- guns_total_per_1000 <- other <- multiple <- NULL
 handgun_share <- longgun_share <- NULL
@@ -38,6 +38,11 @@ total.seas <- guns_total_seas <- total <- state <- month.num <- NULL
 #' analysis()
 analysis <- function(savePlots=FALSE, saveData=FALSE) {
 
+    if (interactive()) {
+        op <- par(ask=TRUE)
+        on.exit(par(op))
+    }
+    
     ## read source data
     #all <- read_csv('data/ncis_bystate_bymonth_bytype.csv', na = '#N/A')
     ## will 'LazyData: yes' and the data/ directory, 'all' is known
@@ -68,15 +73,17 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
     ##total.seas <- final(seas(total))
 
     ## plot seasonally adjusted gun sales
-    plot(total.seas / 1e6, main='Total estimated gun sales', ylab='in million', xlab='seasonal adjused')
+    plot(total.seas / 1e6, main='Total estimated gun sales',
+         ylab='in million', xlab='seasonal adjused')
 
     ## read population data
     ##pop.total <- read_csv('data/population.csv') %>%
     ## will 'LazyData: yes' and the data/ directory, 'all' is known
 
+    print(tail(poptotal))
     poptotal <- poptotal %>%
         filter(year >= 2000) %>%
-        filter(year < 2015 | month <= 11) %>%
+        #filter(year < 2015 | month <= 11) %>%
         with(ts(res_pop, start=c(2000,1), frequency = 12))
    
     ## normalize gun sales by population

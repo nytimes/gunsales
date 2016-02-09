@@ -1,5 +1,5 @@
 
-## variant of main::analysis() using ggplot
+## variant of R/main.R analysis() using ggplot
 
 ## this is hack -- but with the dplyr scoping this 'appears' to be global
 ## so we silence 'R CMD check'
@@ -23,6 +23,11 @@ Date <- Sales <- variable <- Value <- h <- NULL
 #' @examples
 #' gganalysis()
 gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
+
+    if (interactive()) {
+        op <- par(ask=TRUE)
+        on.exit(par(op))
+    }
 
     data("alldata", envir=environment())              # load package datasets
     data("poptotal", envir=environment())
@@ -72,7 +77,7 @@ gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
 
     poptotal <- poptotal %>%
         filter(year >= 2000) %>%
-        filter(year < 2015 | month <= 11) %>%
+        #filter(year < 2015 | month <= 11) %>%
         with(ts(res_pop, start=c(2000,1), frequency = 12))
    
     ## normalize gun sales by population
