@@ -81,7 +81,8 @@ out_data <- ts_to_dataframe(total, 'guns_total') %>%
 out_data <- out_data %>% left_join(
                              ts_to_dataframe( total.seas.pop ) %>%
                              mutate(guns_total_per_1000=round(value,3)) %>%
-                             select(year, month, guns_total_per_1000)
+                             select(year, month, guns_total_per_1000),
+                             by=c("year", "month")
                          )
 
 ## join in seasonal adjusted numbers
