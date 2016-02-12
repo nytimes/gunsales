@@ -233,7 +233,7 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
 #'
 #' @examples
 #' analysis2()
-analysis2 <- function() {
+analysis2 <- function(debug=FALSE) {
 
     ## load data sets included in package
     data("alldata", envir=environment())              
@@ -277,9 +277,11 @@ analysis2 <- function() {
                            guns_total_seas=as.matrix(totalSeas),
                            guns_total_per_1000=round(as.matrix(totalSeasPop), digits=3),
                            guns_total_per_1000_scaled=round(as.matrix(totalSeasScaled), digits=3))
-    print(head(out_data))
-    print(tail(out_data))
-
+    if (debug) {
+        print(head(out_data))
+        print(tail(out_data))
+    }
+    
     ## create a temporary matrix for computing the
     ## handgun_share and longgun_share columns
     ## cbind works correctly here as it operates on timeseries object
@@ -311,9 +313,11 @@ analysis2 <- function() {
         colnames(temp) <- c('year', 'month', str_replace_all(str_to_lower(s), ' ', '_'))
         out_data <- data.frame(out_data, temp[,3,drop=FALSE])
     }
-    print(head(out_data))
-    print(tail(out_data))
-
+    if (debug) {
+        print(head(out_data))
+        print(tail(out_data))
+    }
+    
     ## compute handgun sales for DC: handung * 1.1 + multiple
     dchandgun_checks <- state_ts(alldata, 'District of Columbia', 'handgun', outer_zeros_to_na=F)
     dcmultiple <- state_ts(alldata, 'District of Columbia', 'multiple', outer_zeros_to_na=F)
