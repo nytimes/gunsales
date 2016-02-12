@@ -109,7 +109,8 @@ gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
     out_data <- out_data %>% left_join(
                                  ts_to_dataframe( total.seas.pop ) %>%
                                  mutate(guns_total_per_1000=round(value,3)) %>%
-                                 select(year, month, guns_total_per_1000)
+                                 select(year, month, guns_total_per_1000),
+                                 by=c("year", "month")
                              )
 
     ## join in seasonal adjusted numbers
@@ -255,6 +256,76 @@ gganalysis <- function(savePlots=FALSE, saveData=FALSE) {
     missouri.avg_post_2008 <- mean(missouri[97:108])
     #print(paste('Increase in monthly gun sales in Missouri =', missouri.avg_post_2008 - missouri.avg_pre_2007))
 
+    ## save plots
+    if (savePlots) dev.off()
+
+    invisible(NULL)
+}
+
+
+#' gganalysis()
+gganalysis2 <- function(df, savePlots=FALSE, saveData=FALSE) {
+
+    if (interactive()) {
+        op <- par(ask=TRUE)
+        on.exit(par(op))
+    }
+
+    ## create a Date object suitable for plotting; as.yearmon from zoo
+    df$Date <- as.Date(as.yearmon(df$year + (df$month-1)/12))
+    
+    ## save all plots as PDF
+    if (savePlots) pdf("out/ggplots.pdf", width=9, height=4)
+
+    theme_set(theme_bw(base_size=11))
+
+    ## plot total guns sold
+    print(ggplot(data=df, aes(x=Date, y=guns_total/1e6)) + geom_line() + scale_x_date() + 
+          ggtitle("Total estimated gun sales") + ylab("in million") + xlab("")
+          )
+    
+    print(ggplot(data=df, aes(x=Date, y=guns_total_seas/1e6)) + geom_line() + scale_x_date() +
+          ggtitle("Total estimated gun sales") + ylab("in million") + 
+          xlab("seasonally adjusted")
+          )
+    
+    ## plot gun sales normalized to population
+    print(ggplot(data=df, aes(x=Date)) +
+          geom_line(aes(y=guns_total_per_1000_scaled, colour="black")) +
+          geom_line(aes(y=guns_total_per_1000, colour="red")) +
+          scale_x_date() + 
+          ggtitle("Estimated gun sales per 1000") +
+          xlab("red = adjusted for population growth") +
+          ylab("") +
+          scale_colour_manual(labels=c("Raw", "Cooked"),values=c("black", "red")) + 
+          theme(legend.title=element_blank(), legend.position="bottom")
+          ) 
+ 
+    ## plot handgun/longgun 
+    print(ggplot(data=df, aes(x=Date)) +
+          geom_line(aes(y=handgun_share, colour="red")) +
+          geom_line(aes(y=longgun_share, colour="blue")) +
+          scale_x_date() +
+          ggtitle("Long guns vs handguns") +
+          xlab("red = handguns, blue = long guns") + ylab("") +
+          theme(legend.position="none") + 
+          scale_colour_manual(labels=c("longgun", "handgun"), values=c("blue", "red"))
+          )
+  
+    ## plot percent of national for selected states 
+    show_states <- c('New Jersey', 'Maryland', 'Georgia',
+                     'Louisiana', 'Mississippi', 'Missouri')
+    selected <- gsub(" ", "_", tolower(show_states))
+    ndf <- data.table::data.table(Date=df[,"Date"], df[,selected])
+    ldf <- data.table::melt(ndf, id.vars="Date")
+    print(ggplot(data=ldf, aes(x=Date, y=value)) + geom_line() + 
+        facet_wrap( ~ variable) + 
+        xlab("Percentage of National Sales") + ylab(""))
+    
+    ## compute handgun sales for DC: handung * 1.1 + multiple
+    print(ggplot(data=df, aes(x=Date, y=dc_handguns_per_100k_national_sales)) + geom_line() +
+                 ggtitle("Washington D.C.") + xlab("Sales per 100,000 national handguns"))
+    
     ## save plots
     if (savePlots) dev.off()
 

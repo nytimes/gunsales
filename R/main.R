@@ -265,7 +265,7 @@ analysis2 <- function() {
 
     ## normalize gun sales by population
     totalSeasPop <- totalSeas / poptotal * 1000
-    totalSeasScaled <- total / 280726
+    totalSeasScaled <- totalSeas / 280726
 
     ## create a new data frame that eventually stores all the
     ## data we need in the final piece
@@ -276,7 +276,7 @@ analysis2 <- function() {
     out_data <- data.frame(out_data,
                            guns_total_seas=as.matrix(totalSeas),
                            guns_total_per_1000=round(as.matrix(totalSeasPop), digits=3),
-                           guns_total_per_1000_seas=round(as.matrix(totalSeasScaled), digits=3))
+                           guns_total_per_1000_scaled=round(as.matrix(totalSeasScaled), digits=3))
     print(head(out_data))
     print(tail(out_data))
 
