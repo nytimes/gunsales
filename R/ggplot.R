@@ -9,6 +9,8 @@ guns_total <- value <- guns_total_per_1000 <- other <- multiple <- handgun_share
 total.seas <- guns_total_seas <- total <- state <- month.num <- NULL
 Date <- Sales <- variable <- Value <- h <- NULL
 
+guns_total_per_1000_scaled <- dc_handguns_per_100k_national_sales <- NULL
+
 #' Run Statistical Analysis of Monthly Background Checks of Gun Purchase
 #'
 #' @param savePlots Optional boolean switch to indicate whether plots are saved, default is \sQuote{FALSE}
