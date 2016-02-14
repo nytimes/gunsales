@@ -1,4 +1,23 @@
-plot_gunsales <- function(df, savePlots=FALSE, saveData=FALSE) {
+##' This function creates (base graphics) plots for gunsales analysis.
+##'
+##' In interactive mode, plot display is paused and the user has to
+##' advance by pressing the Return key.
+##' @title Base Plots for gunsales analysis
+##' @param df A \code{data.frame} as prepared by the
+##'     \code{\link{analysis}} functions.
+##' @param savePlots A boolean toggle to indicate if the plots are to
+##'     be saved in the \code{out/} directory, with a default of
+##'     \code{FALSE}.
+##' @return \code{NULL} is returned invisibly.
+##' @author Gregor Aisch and Josh Keller wrote the R code; Dirk
+##'     Eddelbuettel created and maintains the package.
+##' @seealso The NY Times article presenting this analsysi undertaken
+##'     by this package is at
+##'     \url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
+##' @examples
+##' gs <- analysis()
+##' plot_gunsales(gs)
+plot_gunsales <- function(df, savePlots=FALSE) {
 
     if (interactive()) {
         op <- par(ask=TRUE)

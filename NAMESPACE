@@ -1,6 +1,5 @@
 #exportPattern("^[[:alpha:]]+")
-export("analysis", "gganalysis")
-export("analysis2", "gganalysis2")
+export("analysis", "plot_gunsales", "ggplot_gunsales")
 
 importFrom("readr", "read_csv", "write_csv")
 importFrom("dplyr", "mutate", "%>%", "filter", "left_join", "select", "group_by",
