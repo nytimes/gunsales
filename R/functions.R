@@ -44,3 +44,13 @@ replace_outer_zeros <- function(x) {
 }
 
 # d <- state_ts(all, 'Louisiana', 'permit')
+
+df2ts <- function(df, col) {
+    
+    stopifnot(inherits(df, "data.frame"),
+              "year" %in% colnames(df),
+              "month" %in% colnames(df),
+              col %in% colnames(df))
+    
+    ts(df[, col], start=c(df[1,"year"], df[1,"month"]), frequency=12)
+}
