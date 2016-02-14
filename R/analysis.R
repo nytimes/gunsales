@@ -118,3 +118,10 @@ analysis <- function(debug=FALSE) {
     invisible(out_data)
 }
 
+
+
+## R-devel CMD check still whines about these:
+Date <- dc_handguns_per_100k_national_sales <- guns_total <- guns_total_per_1000 <- NULL
+guns_total_per_1000_scaled <- guns_total_seas <- handgun <- handgun_share <- longgun <- NULL
+longgun_share <- month.num <- multiple <- multiple_corrected <- other <- res_pop <- NULL
+state <- value <- year <- NULL
