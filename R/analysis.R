@@ -34,8 +34,8 @@ total.seas <- guns_total_seas <- total <- state <- month.num <- NULL
 #' at \url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
 #'
 #' @examples
-#' analysis()
-analysis <- function(savePlots=FALSE, saveData=FALSE) {
+#' gs <- analysis()
+.old.analysis <- function(savePlots=FALSE, saveData=FALSE) {
 
     if (interactive()) {
         op <- par(ask=TRUE)
@@ -233,7 +233,7 @@ analysis <- function(savePlots=FALSE, saveData=FALSE) {
 #'
 #' @examples
 #' analysis2()
-analysis2 <- function(debug=FALSE) {
+analysis <- function(debug=FALSE) {
 
     ## load data sets included in package
     data("alldata", envir=environment())              
