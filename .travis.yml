@@ -33,7 +33,7 @@ before_install:
   - ./travis-tool.sh bootstrap
 
 install:
-  - ./travis-tool.sh install_aptget r-cran-readr r-cran-dplyr r-cran-stringr r-cran-seasonal r-cran-ggplot2 r-cran-data.table r-cran-zoo
+  - ./travis-tool.sh install_aptget r-cran-readr r-cran-dplyr r-cran-stringr r-cran-seasonal r-cran-ggplot2 r-cran-data.table r-cran-zoo r-cran-knitr
   ## repair x13binary re-install the binary which launchpad somewhat does NOT
   ## (which is probably fine on security/license grounds -- they cannot know)
   ## (and just to reiterate: this is code by the US Census Bureau which
