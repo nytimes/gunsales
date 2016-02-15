@@ -1,6 +1,5 @@
 #exportPattern("^[[:alpha:]]+")
-export("analysis")
-export("gganalysis")
+export("analysis", "plot_gunsales", "ggplot_gunsales")
 
 importFrom("readr", "read_csv", "write_csv")
 importFrom("dplyr", "mutate", "%>%", "filter", "left_join", "select", "group_by",
@@ -8,9 +7,10 @@ importFrom("dplyr", "mutate", "%>%", "filter", "left_join", "select", "group_by"
 importFrom("stringr", "str_replace_all", "str_to_lower")
 importFrom("seasonal", "seas", "final")
 importFrom("grDevices", "dev.off", "pdf")
-importFrom("graphics", "lines", "plot")
+importFrom("graphics", "lines", "plot", "par")
 importFrom("stats", "time", "ts")
-importFrom("utils", "head", "write.csv", "data")
+importFrom("utils", "head", "write.csv", "data", "tail")
 importFrom("zoo", "zoo", "as.yearmon", "index", "coredata", "as.zoo", "as.Date")
 importFrom("data.table", "data.table", ":=")
-import(ggplot2)
+importFrom("ggplot2", "ggplot", "aes", "theme_set", "theme_bw", "ggtitle", "ylab", "xlab",
+           "scale_x_date", "geom_line", "scale_colour_manual", "theme", "element_blank", "facet_wrap")
