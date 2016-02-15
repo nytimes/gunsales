@@ -15,11 +15,9 @@ language: c
 
 env:
   global:
-    # uncommented '--no-build-vignettes' here as we can;
-    # still '--no-manual' to avoid a full latex install
     # uncommented '--as-cran' as we don't need it here 
-    - R_BUILD_ARGS="--no-manual"
-    - R_CHECK_ARGS="--no-manual"
+    - R_BUILD_ARGS="--no-build-vignettes --no-manual"
+    - R_CHECK_ARGS="--no-build-vignettes --no-manual"
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
     # we cannot 'really' fix the x13ashtml file as we cannot write on /usr
     - X13_PATH="/tmp"
@@ -35,13 +33,13 @@ before_install:
   - ./travis-tool.sh bootstrap
 
 install:
-  - ./travis-tool.sh install_aptget r-cran-readr r-cran-dplyr r-cran-stringr r-cran-seasonal r-cran-ggplot2 r-cran-data.table r-cran-zoo r-cran-git2r r-cran-knitr r-cran-rmarkdown
+  - ./travis-tool.sh install_aptget r-cran-readr r-cran-dplyr r-cran-stringr r-cran-seasonal r-cran-ggplot2 r-cran-data.table r-cran-zoo
   ## repair x13binary re-install the binary which launchpad somewhat does NOT
   ## (which is probably fine on security/license grounds -- they cannot know)
   ## (and just to reiterate: this is code by the US Census Bureau which
   ##  cannot be copyrighted in the US; see the GitHub repo for more)
   ## (removed curl's '-s' for now to make download explicit)
-  - cd /tmp && curl -k -L -O https://github.com/x13org/x13prebuilt/raw/master/linux/64/x13ashtml && cd -
+  - cd /tmp && curl -k -L -O https://github.com/x13org/x13prebuilt/raw/master/linux/64/x13ashtml && chmod 0755 x13ashtml && cd -
 
 script:
   - ./travis-tool.sh run_tests
