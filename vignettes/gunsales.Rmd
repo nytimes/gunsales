@@ -39,7 +39,7 @@ publication).
 plot_gunsales(gunsales)
 ```
 
-## Part III: Base Plots
+## Part III: Using ggplot
 
 The second set of charts redisplays the same charts as before, but using the
 [ggplot2](http://cloud.r-project.org/package=ggplot2) package.
