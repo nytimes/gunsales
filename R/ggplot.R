@@ -54,7 +54,8 @@ ggplot_gunsales <- function(df, savePlots=FALSE) {
           ggtitle("Estimated gun sales per 1000") +
           xlab("red = adjusted for population growth") +
           ylab("") +
-          theme(legend.position="none") 
+          theme(legend.position="none") +
+          scale_colour_manual(labels=c("Raw", "Adjusted"),values=c("black", "red"))
           ) 
     
     ## plot handgun/longgun 
