@@ -4,15 +4,19 @@
 \alias{ggplot_gunsales}
 \title{ggplot2 plots for gunsales analysis}
 \usage{
-ggplot_gunsales(df, savePlots = FALSE)
+ggplot_gunsales(df, savePlots = FALSE, savePNG = FALSE)
 }
 \arguments{
 \item{df}{A \code{data.frame} as prepared by the
 \code{\link{analysis}} functions.}
 
 \item{savePlots}{A boolean toggle to indicate if the plots are to
-be saved in the \code{out/} directory, with a default of
-\code{FALSE}.}
+be saved in the \code{out/} directory as a single pdf file,
+with a default of \code{FALSE}.}
+
+\item{savePNG}{A boolean toggle to indicate if the plots are to
+be saved in the \code{out/} directory as individual png files,
+with a default of \code{FALSE}.}
 }
 \value{
 \code{NULL} is returned invisibly.
