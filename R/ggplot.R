@@ -65,7 +65,8 @@ ggplot_gunsales <- function(df, savePlots=FALSE) {
           scale_x_date() +
           ggtitle("Long guns vs handguns") +
           xlab("red = handguns, blue = long guns") + ylab("") +
-          theme(legend.position="none") 
+          theme(legend.position="none") +
+          scale_colour_manual(labels=c("longgun", "handgun"), values=c("blue", "red"))
           )
   
     ## plot percent of national for selected states 
