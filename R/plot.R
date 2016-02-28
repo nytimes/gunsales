@@ -15,8 +15,10 @@
 ##'     by this package is at
 ##'     \url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
 ##' @examples
-##' gs <- analysis()
-##' plot_gunsales(gs)
+##' \dontrun{
+##'   gs <- analysis()
+##'   plot_gunsales(gs)
+##' }
 plot_gunsales <- function(df, savePlots=FALSE) {
 
     if (interactive()) {

@@ -25,8 +25,10 @@ In interactive mode, plot display is paused and the user has to
 advance by pressing the Return key.
 }
 \examples{
-gs <- analysis()
-plot_gunsales(gs)
+\dontrun{
+  gs <- analysis()
+  plot_gunsales(gs)
+}
 }
 \author{
 Gregor Aisch and Josh Keller wrote the R code; Dirk
