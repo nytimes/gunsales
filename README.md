@@ -32,13 +32,20 @@ visualized via
 > ggplot_gunsales(df)
 ```
 
-to create, respectively, plots via R base or ggplot2. Options to save the
-output in the `out/` folder exists.
-
-The ggplot2 charts are shown below:
+to create, respectively, plots via R base or
+[ggplot2](https://github.com/hadley/ggplot2). Options to save the output in the `out/` folder exists. The resulting [ggplot2](https://github.com/hadley/ggplot2) charts are shown below:
 
 ![Total Estimated Gun Sales](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_total.png)
 
+![Total Estimated Gun Sales, Seasonally Adjusted](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_total_seasadj.png)
+
+![Total Estimated Gun Sales, Population-Growth Adjusted](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_total_popadj.png)
+
+![Handguns vs Longguns](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_hand_vs_long_guns.png)
+
+![Six States](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_six_states.png)
+
+![DC](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_dc.png)
 
 
 ### Data issues
