@@ -54,10 +54,9 @@ ggplot_gunsales <- function(df, savePlots=FALSE) {
           ggtitle("Estimated gun sales per 1000") +
           xlab("red = adjusted for population growth") +
           ylab("") +
-          scale_colour_manual(labels=c("Raw", "Cooked"),values=c("black", "red")) + 
-          theme(legend.title=element_blank(), legend.position="bottom")
+          theme(legend.position="none") 
           ) 
- 
+    
     ## plot handgun/longgun 
     print(ggplot(data=df, aes(x=Date)) +
           geom_line(aes(y=handgun_share, colour="red")) +
@@ -65,8 +64,7 @@ ggplot_gunsales <- function(df, savePlots=FALSE) {
           scale_x_date() +
           ggtitle("Long guns vs handguns") +
           xlab("red = handguns, blue = long guns") + ylab("") +
-          theme(legend.position="none") + 
-          scale_colour_manual(labels=c("longgun", "handgun"), values=c("blue", "red"))
+          theme(legend.position="none") 
           )
   
     ## plot percent of national for selected states 
