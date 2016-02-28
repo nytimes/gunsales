@@ -33,7 +33,7 @@ visualized via
 ```
 
 to create, respectively, plots via R base or
-[ggplot2](https://github.com/hadley/ggplot2). Options to save the output in the `out/` folder exists. The resulting [ggplot2](https://github.com/hadley/ggplot2) charts are shown below:
+[ggplot2](https://github.com/hadley/ggplot2). Options to save the output in the `out/` folder exist. The resulting [ggplot2](https://github.com/hadley/ggplot2) charts are shown below:
 
 ![Total Estimated Gun Sales](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_total.png)
 
