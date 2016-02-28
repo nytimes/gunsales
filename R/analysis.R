@@ -14,10 +14,6 @@
 #' gs <- analysis()
 analysis <- function(debug=FALSE) {
     
-    ## load data sets included in package
-    data("alldata", envir=environment())              
-    data("poptotal", envir=environment())
-
     ## estimate gun sales using formula by Jurgen Brauer, published here
     ## http://www.smallarmssurvey.org/fileadmin/docs/F-Working-papers/SAS-WP14-US-Firearms-Industry.pdf
     ##

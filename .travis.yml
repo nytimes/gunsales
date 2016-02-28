@@ -1,0 +1,54 @@
+# Hey Emacs make this  -*- mode: makefile; -*-
+#
+# Sample .travis.yml for R projects.
+#
+# See https://github.com/craigcitro/r-travis
+#     https://github.com/eddelbuettel/r-travis/
+
+# new-ish requirement
+sudo: required
+
+# may as well switch to trusty aka 14.04
+dist: trusty
+
+language: c
+
+env:
+  global:
+    # uncommented '--as-cran' as we don't need it here 
+    - R_BUILD_ARGS="--no-build-vignettes --no-manual"
+    - R_CHECK_ARGS="--no-build-vignettes --no-manual"
+    - _R_CHECK_FORCE_SUGGESTS_=FALSE
+    # we cannot 'really' fix the x13ashtml file as we cannot write on /usr
+    - X13_PATH="/tmp"
+
+before_install:
+  ## PPA for seasonal and x13binary which are not (yet?) packaged by Michael
+  ## Note, however, that the launchpad build of x13binary is BORKED:
+  ## no actual binary
+  - sudo add-apt-repository -y ppa:edd/misc
+  ## r-travis by Craig Citro et al, this covers the two PPAs by Michael
+  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
+  - chmod 755 ./travis-tool.sh
+  - ./travis-tool.sh bootstrap
+
+install:
+  - ./travis-tool.sh install_aptget r-cran-readr r-cran-dplyr r-cran-stringr r-cran-seasonal r-cran-ggplot2 r-cran-data.table r-cran-zoo r-cran-knitr
+  ## repair x13binary re-install the binary which launchpad somewhat does NOT
+  ## (which is probably fine on security/license grounds -- they cannot know)
+  ## (and just to reiterate: this is code by the US Census Bureau which
+  ##  cannot be copyrighted in the US; see the GitHub repo for more)
+  ## (removed curl's '-s' for now to make download explicit)
+  - cd /tmp && curl -k -L -O https://github.com/x13org/x13prebuilt/raw/master/linux/64/x13ashtml && chmod 0755 x13ashtml && cd -
+
+script:
+  - ./travis-tool.sh run_tests
+
+after_failure:
+  - ./travis-tool.sh dump_logs
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
