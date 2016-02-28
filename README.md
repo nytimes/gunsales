@@ -21,15 +21,25 @@ Once the package has loaded, run this in an R shell:
 
 ```r
 > library(gunsales)
-> analysis()
+> df <- analysis()
 ```
 
-or step-by-step in your favorite R environment as eg
-[RStudio](http://www.rstudio.com) or [ESS](http://ess.r-project.org).
+to create a single dataframe containing the results. The dataframe can be
+visualized via
 
-The function can create the PDF plots and CSV files in the `out/` folder.
+```r
+> plot_gunsales(df)    
+> ggplot_gunsales(df)
+```
 
-For more explanation of what the file is doing, please read through the comments in `main.R`..
+to create, respectively, plots via R base or ggplot2. Options to save the
+output in the `out/` folder exists.
+
+The ggplot2 charts are shown below:
+
+![Total Estimated Gun Sales](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_total.png)
+
+
 
 ### Data issues
 
