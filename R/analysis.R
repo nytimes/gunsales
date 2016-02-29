@@ -12,6 +12,8 @@
 #'
 #' @examples
 #' gs <- analysis()
+#' plot_gunsales(gs)
+#' ggplot_gunsales(gs)
 analysis <- function(debug=FALSE) {
     
     ## estimate gun sales using formula by Jurgen Brauer, published here

@@ -21,15 +21,32 @@ Once the package has loaded, run this in an R shell:
 
 ```r
 > library(gunsales)
-> analysis()
+> df <- analysis()
 ```
 
-or step-by-step in your favorite R environment as eg
-[RStudio](http://www.rstudio.com) or [ESS](http://ess.r-project.org).
+to create a single dataframe containing the results. The dataframe can be
+visualized via
 
-The function can create the PDF plots and CSV files in the `out/` folder.
+```r
+> plot_gunsales(df)    
+> ggplot_gunsales(df)
+```
 
-For more explanation of what the file is doing, please read through the comments in `main.R`..
+to create, respectively, plots via R base or
+[ggplot2](https://github.com/hadley/ggplot2). Options to save the output in the `out/` folder exist. The resulting [ggplot2](https://github.com/hadley/ggplot2) charts are shown below:
+
+![Total Estimated Gun Sales](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_total.png)
+
+![Total Estimated Gun Sales, Seasonally Adjusted](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_total_seasadj.png)
+
+![Total Estimated Gun Sales, Population-Growth Adjusted](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_total_popadj.png)
+
+![Handguns vs Longguns](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_hand_vs_long_guns.png)
+
+![Six States](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_six_states.png)
+
+![DC](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_dc.png)
+
 
 ### Data issues
 

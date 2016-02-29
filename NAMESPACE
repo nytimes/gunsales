@@ -6,7 +6,7 @@ importFrom("dplyr", "mutate", "%>%", "filter", "left_join", "select", "group_by"
            "summarize", "arrange", "select_", "last")
 importFrom("stringr", "str_replace_all", "str_to_lower")
 importFrom("seasonal", "seas", "final")
-importFrom("grDevices", "dev.off", "pdf")
+importFrom("grDevices", "dev.off", "pdf", "png")
 importFrom("graphics", "lines", "plot", "par")
 importFrom("stats", "time", "ts")
 importFrom("utils", "head", "write.csv", "data", "tail")
