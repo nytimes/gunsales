@@ -1,17 +1,19 @@
 # Analysis of NICS gun purchase background checks
 
+[![Build Status](https://travis-ci.org/NYTimes/gunsales.svg)](https://travis-ci.org/NYTimes/gunsales) [![License](http://img.shields.io/badge/license-Apache%20%28=%202%29-brightgreen.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0) [![CRAN](http://www.r-pkg.org/badges/version/gunsales)](http://cran.rstudio.com/package=gunsales) [![Downloads](http://cranlogs.r-pkg.org/badges/gunsales?color=brightgreen)](http://www.r-pkg.org/pkg/gunsales)
+
 Statistical analysis of monthly background checks of gun purchases for the New York Times story [What Drives Gun Sales: Terrorism,
 Obama and Calls for Restrictions](http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?).
 
 ### Pre-requisites
 
-This package depends on the R package [seasonal](https://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf) for the seasonal adjustments, which itself uses a program called [X-13ARIMA-SEATS](https://www.census.gov/srd/www/x13as/). 
+This package depends on the R package [seasonal](https://cran.r-project.org/web/packages/seasonal/vignettes/seas.pdf) for the seasonal adjustments, which itself uses a program called [X-13ARIMA-SEATS](https://www.census.gov/srd/www/x13as/).
 Windows, OS X and Linux binaries for this program are installed by the R package [x13binary](https://github.com/x13org/x13binary).
 
-Both packages are now on CRAN and can be installed the usual way via
+Both packages are now on CRAN and can be installed along with the other dependencies via
 
 ```r
-> install.packages(c("seasonal", "gunsales"))
+> install.packages("gunsales")
 ```
 
 
@@ -35,17 +37,17 @@ visualized via
 to create, respectively, plots via R base or
 [ggplot2](https://github.com/hadley/ggplot2). Options to save the output in the `out/` folder exist. The resulting [ggplot2](https://github.com/hadley/ggplot2) charts are shown below:
 
-![Total Estimated Gun Sales](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_total.png)
+![Total Estimated Gun Sales](https://raw.githubusercontent.com/NYTimes/gunsales/master/out/ggplot_total.png)
 
-![Total Estimated Gun Sales, Seasonally Adjusted](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_total_seasadj.png)
+![Total Estimated Gun Sales, Seasonally Adjusted](https://raw.githubusercontent.com/NYTimes/gunsales/master/out/ggplot_total_seasadj.png)
 
-![Total Estimated Gun Sales, Population-Growth Adjusted](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_total_popadj.png)
+![Total Estimated Gun Sales, Population-Growth Adjusted](https://raw.githubusercontent.com/NYTimes/gunsales/master/out/ggplot_total_popadj.png)
 
-![Handguns vs Longguns](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_hand_vs_long_guns.png)
+![Handguns vs Longguns](https://raw.githubusercontent.com/NYTimes/gunsales/master/out/ggplot_hand_vs_long_guns.png)
 
-![Six States](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_six_states.png)
+![Six States](https://raw.githubusercontent.com/NYTimes/gunsales/master/out/ggplot_six_states.png)
 
-![DC](https://raw.githubusercontent.com/eddelbuettel/gunsales/master/out/ggplot_dc.png)
+![DC](https://raw.githubusercontent.com/NYTimes/gunsales/master/out/ggplot_dc.png)
 
 
 ### Data issues
