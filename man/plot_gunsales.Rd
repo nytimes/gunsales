@@ -32,11 +32,11 @@ advance by pressing the Return key.
 }
 \author{
 Gregor Aisch and Josh Keller wrote the R code; Dirk
-    Eddelbuettel created and maintains the package.
+Eddelbuettel created and maintains the package.
 }
 \seealso{
 The NY Times article presenting this analsysi undertaken
-    by this package is at
-    \url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
+by this package is at
+\url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
 }
 

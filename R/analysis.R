@@ -1,19 +1,23 @@
 
 
-#' Run Statistical Analysis of Monthly Background Checks of Gun Purchase
-#'
-#' @param debug Optional boolean switch to indicate whether interim data is displayed; default is \sQuote{FALSE}
-#'
-#' @return A \code{data.frame} is returned, contained all different prepared columns.
-#'                                        
-#' @author Gregor Aisch and Josh Keller wrote the R code; Dirk Eddelbuettel created and maintains the package.
-#' @seealso The NY Times article presenting this analsysi undertaken by this package is
-#' at \url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
-#'
-#' @examples
-#' gs <- analysis()
-#' plot_gunsales(gs)
-#' ggplot_gunsales(gs)
+##' Run Statistical Analysis of Monthly Background Checks of Gun Purchase
+##'
+##' @param debug Optional boolean switch to indicate whether interim data is displayed;
+##' default is \sQuote{FALSE}
+##'
+##' @return A \code{data.frame} is returned, contained all different prepared columns.
+##'                                        
+##' @author Gregor Aisch and Josh Keller wrote the R code; Dirk Eddelbuettel created
+##' and maintains the package.
+##' @seealso The NY Times article presenting this analsysi undertaken by this package is
+##' at \url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
+##'
+##' @examples
+##' \dontrun{
+##'   gs <- analysis()
+##'   plot_gunsales(gs)
+##'   ggplot_gunsales(gs)
+##' }
 analysis <- function(debug=FALSE) {
     
     ## estimate gun sales using formula by Jurgen Brauer, published here

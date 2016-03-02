@@ -25,8 +25,12 @@ in the [GitHub](http://www.github.com) repository [gunsales](https://github.com/
 The first step consists in transforming the two raw data sets included in the
 package into the data.frame used for the subsequent plotting.
 
-```{r, initialData,fig.width=7}
+```{r, initialDataFake, eval=FALSE}
 gunsales <- analysis()
+```
+
+```{r, initialData, fig.width=7, echo=FALSE}
+if (gunsales:::.goodOS()) gunsales <- analysis() else cat("Unsupported platform -- no plots below.")
 ```
 
 ## Part II: Base Plots
@@ -35,8 +39,12 @@ Given the transformed data, we can display the variety of plots contained in
 the New York Times analysis (which uses post-processed variants suitable for
 publication).
 
-```{r, basePlots,fig.width=7}
+```{r, basePlotsFake, eval=FALSE}
 plot_gunsales(gunsales)
+```
+
+```{r, basePlots, fig.width=7, echo=FALSE}
+if (gunsales:::.goodOS()) plot_gunsales(gunsales)
 ```
 
 ## Part III: Using ggplot
@@ -44,6 +52,10 @@ plot_gunsales(gunsales)
 The second set of charts redisplays the same charts as before, but using the
 [ggplot2](http://cloud.r-project.org/package=ggplot2) package.
 
-```{r, ggPlots,fig.width=7}
+```{r, ggPlotsFake, eval=FALSE}
 ggplot_gunsales(gunsales)
+```
+
+```{r, ggPlots, fig.width=7, echo=FALSE}
+if (gunsales:::.goodOS()) ggplot_gunsales(gunsales)
 ```
