@@ -10,7 +10,7 @@ importFrom("x13binary", "supportedPlatform")
 importFrom("grDevices", "dev.off", "pdf", "png")
 importFrom("graphics", "lines", "plot", "par")
 importFrom("stats", "time", "ts")
-importFrom("utils", "head", "write.csv", "data", "tail")
+importFrom("utils", "head", "write.csv", "data", "tail", "compareVersion")
 importFrom("zoo", "zoo", "as.yearmon", "index", "coredata", "as.zoo", "as.Date")
 importFrom("data.table", "data.table", ":=")
 importFrom("ggplot2", "ggplot", "aes", "theme_set", "theme_bw", "ggtitle", "ylab", "xlab",
