@@ -7,7 +7,8 @@
 analysis(debug = FALSE)
 }
 \arguments{
-\item{debug}{Optional boolean switch to indicate whether interim data is displayed; default is \sQuote{FALSE}}
+\item{debug}{Optional boolean switch to indicate whether interim data is displayed;
+default is \sQuote{FALSE}}
 }
 \value{
 A \code{data.frame} is returned, contained all different prepared columns.
@@ -16,12 +17,15 @@ A \code{data.frame} is returned, contained all different prepared columns.
 Run Statistical Analysis of Monthly Background Checks of Gun Purchase
 }
 \examples{
-gs <- analysis()
-plot_gunsales(gs)
-ggplot_gunsales(gs)
+\dontrun{
+  gs <- analysis()
+  plot_gunsales(gs)
+  ggplot_gunsales(gs)
+}
 }
 \author{
-Gregor Aisch and Josh Keller wrote the R code; Dirk Eddelbuettel created and maintains the package.
+Gregor Aisch and Josh Keller wrote the R code; Dirk Eddelbuettel created
+and maintains the package.
 }
 \seealso{
 The NY Times article presenting this analsysi undertaken by this package is

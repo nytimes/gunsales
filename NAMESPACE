@@ -6,11 +6,13 @@ importFrom("dplyr", "mutate", "%>%", "filter", "left_join", "select", "group_by"
            "summarize", "arrange", "select_", "last")
 importFrom("stringr", "str_replace_all", "str_to_lower")
 importFrom("seasonal", "seas", "final")
+importFrom("x13binary", "supportedPlatform")
 importFrom("grDevices", "dev.off", "pdf", "png")
 importFrom("graphics", "lines", "plot", "par")
 importFrom("stats", "time", "ts")
-importFrom("utils", "head", "write.csv", "data", "tail")
+importFrom("utils", "head", "write.csv", "data", "tail", "compareVersion")
 importFrom("zoo", "zoo", "as.yearmon", "index", "coredata", "as.zoo", "as.Date")
 importFrom("data.table", "data.table", ":=")
 importFrom("ggplot2", "ggplot", "aes", "theme_set", "theme_bw", "ggtitle", "ylab", "xlab",
-           "scale_x_date", "geom_line", "scale_colour_manual", "theme", "element_blank", "facet_wrap")
+           "scale_x_date", "geom_line", "scale_colour_manual", "theme", "element_blank",
+           "facet_wrap")

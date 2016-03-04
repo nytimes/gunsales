@@ -4,16 +4,16 @@
 ##' advance by pressing the Return key.
 ##' @title Base Plots for gunsales analysis
 ##' @param df A \code{data.frame} as prepared by the
-##'     \code{\link{analysis}} functions.
+##' \code{\link{analysis}} functions.
 ##' @param savePlots A boolean toggle to indicate if the plots are to
-##'     be saved in the \code{out/} directory, with a default of
-##'     \code{FALSE}.
+##' be saved in the \code{out/} directory, with a default of
+##' \code{FALSE}.
 ##' @return \code{NULL} is returned invisibly.
 ##' @author Gregor Aisch and Josh Keller wrote the R code; Dirk
-##'     Eddelbuettel created and maintains the package.
+##' Eddelbuettel created and maintains the package.
 ##' @seealso The NY Times article presenting this analsysi undertaken
-##'     by this package is at
-##'     \url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
+##' by this package is at
+##' \url{http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?}
 ##' @examples
 ##' \dontrun{
 ##'   gs <- analysis()
