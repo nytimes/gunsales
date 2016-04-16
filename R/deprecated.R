@@ -193,8 +193,8 @@
         ## check yearly sums for overall trends
         ts_to_dataframe(total) %>%
         group_by(year) %>%
-            summarize(guns_sold=sum(value)) %>%
-            write_csv('out/gun-sales-by-year.csv')
+            summarize(guns_sold=sum(value)) %>% tempdat
+        write.csv(tempdat, file='out/gun-sales-by-year.csv')
     }
     
     ## estimate how much more guns are sold missouri after law change

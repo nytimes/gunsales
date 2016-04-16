@@ -1,11 +1,11 @@
 ## run from root directory against source (installed=FALSE) or installed directory
 .rawDataToSavedData <- function(installed=FALSE) {
     if (installed) {
-        alldata <- read_csv(system.file("rawdata", "ncis_bystate_bymonth_bytype.csv", package="gunsales"), na = "#N/A")
-        poptotal <- read_csv(system.file("rawdata", "population.csv", package="gunsales"))
+        alldata <- read.csv(system.file("rawdata", "ncis_bystate_bymonth_bytype.csv", package="gunsales"), na = "#N/A", stringsAsFactors=FALSE)
+        poptotal <- read.csv(system.file("rawdata", "population.csv", package="gunsales"), stringsAsFactors=FALSE)
     } else {                          
-        alldata <- read_csv("inst/rawdata/ncis_bystate_bymonth_bytype.csv", na = "#N/A")
-        poptotal <- read_csv("inst/rawdata/population.csv")
+        alldata <- read.csv("inst/rawdata/ncis_bystate_bymonth_bytype.csv", na = "#N/A", stringsAsFactors=FALSE)
+        poptotal <- read.csv("inst/rawdata/population.csv", stringsAsFactors=FALSE)
     }
     save(alldata, file="data/alldata.RData", compress="xz", compression_level=9)    
     save(poptotal, file="data/poptotal.RData", compress="xz", compression_level=9)
