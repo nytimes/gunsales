@@ -1,8 +1,8 @@
 Package: gunsales
 Type: Package
 Title: Statistical Analysis of Monthly Background Checks of Gun Purchases
-Version: 0.1.1.2
-Date: 2016-04-09
+Version: 0.1.1.3
+Date: 2016-09-17
 Author: Gregor Aisch, Josh Keller and Dirk Eddelbuettel
 Maintainer: Dirk Eddelbuettel <edd@debian.org>
 Description: Statistical analysis of monthly background checks of gun purchases for the New York Times 
@@ -12,6 +12,6 @@ License: Apache License (== 2)
 Depends: R (>= 2.10)
 LazyData: true
 Imports: utils, dplyr, stringr, seasonal, ggplot2, data.table, zoo, x13binary
-Suggests: knitr
+Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
