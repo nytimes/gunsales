@@ -91,7 +91,7 @@ analysis <- function(debug=FALSE) {
     
         ## merge with out_data
         temp <- mutate(ts_to_dataframe(s.ts), value=round(value,3))
-        colnames(temp) <- c('year', 'month', str_replace_all(str_to_lower(s), ' ', '_'))
+        colnames(temp) <- c('year', 'month', gsub(' ', '_', tolower(s)))
         out_data <- data.frame(out_data, temp[,3,drop=FALSE])
     }
     if (debug) {
