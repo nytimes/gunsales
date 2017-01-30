@@ -6,7 +6,7 @@
 \title{Source data from the FBI's National Instant Criminal Background Check System}
 \format{A \sQuote{tbl_df} and data frame object with 11480 observation of 34 variables}
 \source{
-\url{https://www.fbi.gov/about-us/cjis/nics/reports/nics_firearm_checks_-_month_year_by_state_type.pdf}
+\url{https://www.fbi.gov/file-repository/nics_firearm_checks_-_month_year_by_state_type.pdf}
 }
 \description{
 It was converted from the original PDF format to CSV using Tabula.

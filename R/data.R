@@ -18,7 +18,7 @@
 #' @docType data
 #' @name alldata
 #' @format A \sQuote{tbl_df} and data frame object with 11480 observation of 34 variables
-#' @source \url{https://www.fbi.gov/about-us/cjis/nics/reports/nics_firearm_checks_-_month_year_by_state_type.pdf}
+#' @source \url{https://www.fbi.gov/file-repository/nics_firearm_checks_-_month_year_by_state_type.pdf}
 #' @seealso The GitHub repository created by Buzzfeed containing a similar data set
 #' at \url{https://github.com/BuzzFeedNews/nics-firearm-background-checks/}
 NULL

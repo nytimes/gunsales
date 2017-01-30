@@ -16,7 +16,7 @@ library(gunsales)
 ## About
 
 This document provides the analysis from the [New York Times](http://www.nytimes.com) 
-on-line article ["What Drives Gun Sales: Terrorism, Obama and Calls for Restrictions"](http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?). The [R](http://www.r-project.org) code underlying the analysis is provided
+on-line article ["What Drives Gun Sales: Terrorism, Obama and Calls for Restrictions"](http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html?). The [R](https://www.r-project.org) code underlying the analysis is provided
 in the [GitHub](http://www.github.com) repository [gunsales](https://github.com/NYTimes/gunsales) which contains the R package 
 
 
@@ -50,7 +50,7 @@ if (gunsales:::.goodOS()) plot_gunsales(gunsales)
 ## Part III: Using ggplot
 
 The second set of charts redisplays the same charts as before, but using the
-[ggplot2](http://cloud.r-project.org/package=ggplot2) package.
+[ggplot2](https://cran.r-project.org/package=ggplot2) package.
 
 ```{r, ggPlotsFake, eval=FALSE}
 ggplot_gunsales(gunsales)
