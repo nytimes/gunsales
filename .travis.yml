@@ -11,7 +11,8 @@ before_install:
   - ./run.sh bootstrap
 
 install:
-  - ./run.sh install_aptget r-cran-dplyr r-cran-seasonal r-cran-ggplot2 r-cran-data.table r-cran-zoo r-cran-knitr r-cran-rmarkdown
+  - ./run.sh install_aptget r-cran-dplyr r-cran-ggplot2 r-cran-data.table r-cran-zoo r-cran-knitr r-cran-rmarkdown
+  - ./run.sh install_r seasonal
 
 script:
   - ./run.sh run_tests
