@@ -2,4 +2,5 @@
 ^\.Rproj\.user$
 out
 R/deprecated.R$
-.travis.yml
+^\.travis.yml$
+^\.github
