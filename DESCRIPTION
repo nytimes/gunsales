@@ -13,5 +13,7 @@ Depends: R (>= 2.10)
 LazyData: true
 Imports: utils, dplyr, seasonal, ggplot2, data.table, zoo, x13binary
 Suggests: knitr, rmarkdown
+URL: https://github.com/eddelbuettel/gunsales
+BugReports: https://github.com/eddelbuettel/gunsales/issues
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
