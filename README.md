@@ -1,6 +1,6 @@
 # Analysis of NICS gun purchase background checks
 
-[![Build Status](https://travis-ci.org/NYTimes/gunsales.svg)](https://travis-ci.org/NYTimes/gunsales) 
+[![Build Status](https://github.com/eddelbuettel/gunsales/actions/workflows/ci.yaml/badge.svg)](https://github.com/eddelbuettel/gunsales/actions/workflows/ci.yaml)
 [![License](https://img.shields.io/badge/license-Apache%20%28=%202%29-brightgreen.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0) 
 [![CRAN](https://www.r-pkg.org/badges/version/gunsales)](https://cran.r-project.org/package=gunsales) 
 [![Downloads](https://cranlogs.r-pkg.org/badges/gunsales?color=brightgreen)](https://www.r-pkg.org/pkg/gunsales)
